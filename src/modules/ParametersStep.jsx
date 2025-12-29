@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { modelMetadata } from './ModelChoiceStep.jsx';
 
 function useFormState(initialValues) {
@@ -12,13 +12,136 @@ function useFormState(initialValues) {
   return { values, handleChange, setValues };
 }
 
+// Configuration des champs obligatoires par section pour chaque modèle
+const REQUIRED_FIELDS_BY_MODEL = {
+  recurring: [
+    ['annualRevenuePerClient', 'incrementalMargin'], // Section 1
+    [], // Section 2 (pas de champs obligatoires)
+    ['arrMultiple'] // Section 3
+  ],
+  projects: [
+    ['avgContractValue', 'avgOperatingMargin'], // Section 1
+    [], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  transactions: [
+    ['avgTransactionValue', 'successFee'], // Section 1
+    [], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  financing: [
+    ['avgFinancedAmount', 'annualSpread'], // Section 1
+    [], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  asset_management: [
+    ['initialAum', 'mgmtFeeAnnual'], // Section 1
+    [], // Section 2
+    ['mgmtFeesMultiple'] // Section 3
+  ]
+};
+
+// Configuration de tous les champs (obligatoires + optionnels) par section pour chaque modèle
+const ALL_FIELDS_BY_MODEL = {
+  recurring: [
+    ['annualRevenuePerClient', 'incrementalMargin', 'contractDurationYears', 'annualRetentionRate'], // Section 1
+    ['introsPerQuarter', 'convIntroToClient'], // Section 2
+    ['arrMultiple'] // Section 3
+  ],
+  projects: [
+    ['avgContractValue', 'avgOperatingMargin'], // Section 1
+    ['qualifiedOppPerQuarter', 'convOppToClient'], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  transactions: [
+    ['avgTransactionValue', 'successFee', 'workFees'], // Section 1
+    ['introsPerQuarter', 'convIntroToMandate'], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  financing: [
+    ['avgFinancedAmount', 'annualSpread', 'netMargin'], // Section 1
+    ['introsPerQuarter', 'convIntroToFinancing'], // Section 2
+    ['ebitdaMultiple'] // Section 3
+  ],
+  asset_management: [
+    ['initialAum', 'mgmtFeeAnnual', 'performanceFee'], // Section 1
+    ['introsPerQuarter', 'convIntroToRelationship'], // Section 2
+    ['mgmtFeesMultiple'] // Section 3
+  ]
+};
+
+function useProgressiveSections(modelKey, values) {
+  const requiredFields = REQUIRED_FIELDS_BY_MODEL[modelKey] || [];
+  const allFields = ALL_FIELDS_BY_MODEL[modelKey] || [];
+  
+  const visibleSections = useMemo(() => {
+    const visible = [];
+    
+    for (let i = 0; i < requiredFields.length; i++) {
+      // La première section est toujours visible
+      if (i === 0) {
+        visible.push(true);
+        continue;
+      }
+      
+      // Pour les sections suivantes, vérifier que la section précédente est visible
+      const previousSectionVisible = visible[i - 1];
+      
+      if (!previousSectionVisible) {
+        visible.push(false);
+        continue;
+      }
+      
+      // Vérifier que la section précédente (immédiate) est complète
+      const previousRequiredFields = requiredFields[i - 1];
+      const previousAllFields = allFields[i - 1] || [];
+      
+      let isPreviousComplete = false;
+      
+      // Si la section précédente a des champs obligatoires, vérifier qu'ils sont tous remplis
+      if (previousRequiredFields.length > 0) {
+        isPreviousComplete = previousRequiredFields.every(field => {
+          const value = values[field];
+          return value !== undefined && value !== null && value !== '';
+        });
+      } else {
+        // Si la section précédente n'a pas de champs obligatoires,
+        // vérifier qu'au moins un champ (optionnel) a été rempli
+        isPreviousComplete = previousAllFields.some(field => {
+          const value = values[field];
+          return value !== undefined && value !== null && value !== '';
+        });
+      }
+      
+      // La section est visible si la section précédente est visible ET complète
+      visible.push(isPreviousComplete);
+    }
+    
+    return visible;
+  }, [modelKey, values, requiredFields, allFields]);
+  
+  const isFormComplete = useMemo(() => {
+    return requiredFields.every((sectionFields, index) => {
+      if (!visibleSections[index]) return false;
+      return sectionFields.every(field => {
+        const value = values[field];
+        return value !== undefined && value !== null && value !== '';
+      });
+    });
+  }, [values, requiredFields, visibleSections]);
+  
+  return { visibleSections, isFormComplete };
+}
+
 export function ParametersStep({ modelKey, initialValues, onBack, onSubmit }) {
   const { values, handleChange } = useFormState(initialValues);
-  const meta = modelMetadata[modelKey];
+  const { visibleSections, isFormComplete } = useProgressiveSections(modelKey, values);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit(modelKey, values);
+    if (isFormComplete) {
+      onSubmit(modelKey, values);
+    }
   };
 
   const title = 'Comprendre votre modèle pour affiner l’estimation';
@@ -33,25 +156,35 @@ export function ParametersStep({ modelKey, initialValues, onBack, onSubmit }) {
       </p>
 
       <form onSubmit={handleSubmit}>
-        {modelKey === 'recurring' && <RecurringSections values={values} onChange={handleChange} />}
-        {modelKey === 'projects' && <ProjectsSections values={values} onChange={handleChange} />}
-        {modelKey === 'transactions' && (
-          <TransactionsSections values={values} onChange={handleChange} />
+        {modelKey === 'recurring' && (
+          <RecurringSections values={values} onChange={handleChange} visibleSections={visibleSections} />
         )}
-        {modelKey === 'financing' && <FinancingSections values={values} onChange={handleChange} />}
+        {modelKey === 'projects' && (
+          <ProjectsSections values={values} onChange={handleChange} visibleSections={visibleSections} />
+        )}
+        {modelKey === 'transactions' && (
+          <TransactionsSections values={values} onChange={handleChange} visibleSections={visibleSections} />
+        )}
+        {modelKey === 'financing' && (
+          <FinancingSections values={values} onChange={handleChange} visibleSections={visibleSections} />
+        )}
         {modelKey === 'asset_management' && (
-          <AssetManagementSections values={values} onChange={handleChange} />
+          <AssetManagementSections values={values} onChange={handleChange} visibleSections={visibleSections} />
         )}
 
         <div style={{ marginTop: 32 }}>
-          <button type="submit" className="primary-button">
+          <button 
+            type="submit" 
+            className={`primary-button ${!isFormComplete ? 'primary-button-disabled' : ''}`}
+            disabled={!isFormComplete}
+          >
             <span>Voir mon estimation</span>
             <span className="primary-button-icon">→</span>
           </button>
         </div>
-        <div style={{ marginTop: 12, fontSize: 12, color: 'var(--color-text-muted)' }}>
+        <div style={{ marginTop: 12, fontSize: 12, color: 'rgba(255, 255, 255, 0.6)' }}>
           Données à titre indicatif, non contractuelles. Vous pourrez affiner les hypothèses lors
-          d’un échange avec Arbitrage Partners.
+          d'un échange avec Arbitrage Partners.
         </div>
         <div style={{ marginTop: 16, fontSize: 12 }}>
           <button
@@ -62,7 +195,7 @@ export function ParametersStep({ modelKey, initialValues, onBack, onSubmit }) {
               border: 'none',
               padding: 0,
               cursor: 'pointer',
-              color: 'var(--color-text-muted)',
+              color: 'rgba(255, 255, 255, 0.6)',
               textDecoration: 'underline'
             }}
           >
@@ -74,7 +207,7 @@ export function ParametersStep({ modelKey, initialValues, onBack, onSubmit }) {
   );
 }
 
-function RecurringSections({ values, onChange }) {
+function RecurringSections({ values, onChange, visibleSections = [true, true, true] }) {
   const setFieldValue = (name, rawValue) => {
     onChange(name)({ target: { value: rawValue } });
   };
@@ -103,6 +236,7 @@ function RecurringSections({ values, onChange }) {
 
   return (
     <>
+      {visibleSections[0] && (
       <div className="section">
         <h2 className="section-title">1. Valeur économique d’un client</h2>
         <div className="field">
@@ -163,7 +297,9 @@ function RecurringSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[1] && (
       <div className="section">
         <h2 className="section-title">2. Potentiel de croissance</h2>
         <div className="field-grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -201,13 +337,15 @@ function RecurringSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[2] && (
       <div className="section">
         <h2 className="section-title">3. Valorisation</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Multiple de valorisation de l’ARR <span>*</span>
+              Multiple de valorisation de l'ARR <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -221,15 +359,17 @@ function RecurringSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
 
-function ProjectsSections({ values, onChange }) {
+function ProjectsSections({ values, onChange, visibleSections = [true, true, true] }) {
   return (
     <>
+      {visibleSections[0] && (
       <div className="section">
-        <h2 className="section-title">1. Valeur d’un contrat</h2>
+        <h2 className="section-title">1. Valeur d'un contrat</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
@@ -261,7 +401,9 @@ function ProjectsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[1] && (
       <div className="section">
         <h2 className="section-title">2. Capacité commerciale</h2>
         <div className="field-grid">
@@ -293,13 +435,15 @@ function ProjectsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[2] && (
       <div className="section">
         <h2 className="section-title">3. Valorisation</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Multiple d’EBITDA observé <span>*</span>
+              Multiple d'EBITDA observé <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -313,15 +457,17 @@ function ProjectsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
 
-function TransactionsSections({ values, onChange }) {
+function TransactionsSections({ values, onChange, visibleSections = [true, true, true] }) {
   return (
     <>
+      {visibleSections[0] && (
       <div className="section">
-        <h2 className="section-title">1. Valeur d’un mandat</h2>
+        <h2 className="section-title">1. Valeur d'un mandat</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
@@ -407,7 +553,9 @@ function TransactionsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[1] && (
       <div className="section">
         <h2 className="section-title">2. Pipeline</h2>
         <div className="field-grid">
@@ -439,13 +587,15 @@ function TransactionsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[2] && (
       <div className="section">
         <h2 className="section-title">3. Valorisation</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Multiple d’EBITDA (small / mid-cap) <span>*</span>
+              Multiple d'EBITDA (small / mid-cap) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -459,15 +609,17 @@ function TransactionsSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
 
-function FinancingSections({ values, onChange }) {
+function FinancingSections({ values, onChange, visibleSections = [true, true, true] }) {
   return (
     <>
+      {visibleSections[0] && (
       <div className="section">
-        <h2 className="section-title">1. Valeur d’une opération</h2>
+        <h2 className="section-title">1. Valeur d'une opération</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
@@ -563,7 +715,9 @@ function FinancingSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[1] && (
       <div className="section">
         <h2 className="section-title">2. Pipeline</h2>
         <div className="field-grid">
@@ -595,13 +749,15 @@ function FinancingSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[2] && (
       <div className="section">
         <h2 className="section-title">3. Valorisation</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Multiple d’EBITDA institutionnel <span>*</span>
+              Multiple d'EBITDA institutionnel <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -615,13 +771,15 @@ function FinancingSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }
 
-function AssetManagementSections({ values, onChange }) {
+function AssetManagementSections({ values, onChange, visibleSections = [true, true, true] }) {
   return (
     <>
+      {visibleSections[0] && (
       <div className="section">
         <h2 className="section-title">1. Nouvelle relation</h2>
         <div className="field-grid">
@@ -707,7 +865,9 @@ function AssetManagementSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[1] && (
       <div className="section">
         <h2 className="section-title">2. Pipeline</h2>
         <div className="field-grid">
@@ -739,7 +899,9 @@ function AssetManagementSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
 
+      {visibleSections[2] && (
       <div className="section">
         <h2 className="section-title">3. Valorisation</h2>
         <div className="field-grid">
@@ -759,6 +921,7 @@ function AssetManagementSections({ values, onChange }) {
           </div>
         </div>
       </div>
+      )}
     </>
   );
 }

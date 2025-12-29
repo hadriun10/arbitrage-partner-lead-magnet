@@ -17,7 +17,15 @@ export function App() {
   const [selectedModel, setSelectedModel] = useState(null);
   const [parametersByModel, setParametersByModel] = useState({});
   const [unlockOpen, setUnlockOpen] = useState(false);
-  const [contactData, setContactData] = useState(null);
+  
+  // Une seule variable booléenne : true = flouté + CTA visible, false = déflouté + CTA caché
+  // Par défaut true (flouté), sauf si on a déjà débloqué dans cette session (sessionStorage)
+  const [isBlurred, setIsBlurred] = useState(() => {
+    const saved = sessionStorage.getItem('resultsBlurred');
+    // Si 'false' est sauvegardé, on est débloqué (false)
+    // Sinon (null ou 'true'), on est flouté (true par défaut)
+    return saved !== 'false';
+  });
 
   const handleStart = () => {
     setStep(STEPS.MODEL);
@@ -64,53 +72,63 @@ export function App() {
   }, [currentStepIndex, totalSteps]);
 
   const handleUnlock = (data) => {
-    setContactData(data);
+    // Quand l'utilisateur soumet ses infos, on défloute et on cache le CTA
+    setIsBlurred(false);
+    sessionStorage.setItem('resultsBlurred', 'false');
     setUnlockOpen(false);
+    // Les données peuvent être utilisées pour d'autres besoins (analytics, etc.)
+    console.log('Contact data submitted:', data);
   };
 
-  const showDetails = Boolean(contactData);
+  const handleEditParameters = () => {
+    if (selectedModel) {
+      setStep(STEPS.PARAMETERS);
+    }
+  };
 
   return (
     <div className="app-root">
       <div className="app-shell">
-        {step !== STEPS.LANDING && (
-          <div className="top-progress">
-            <div>
-              Étape {currentStepIndex} sur {totalSteps}
-            </div>
-            <div className="top-progress-bar">
-              <div className="top-progress-bar-fill" style={{ width: `${progress}%` }} />
-            </div>
-          </div>
-        )}
-
         {step === STEPS.LANDING && <Landing onStart={handleStart} />}
 
-        {step === STEPS.MODEL && (
-          <ModelChoiceStep selectedModel={selectedModel} onSelectModel={handleSelectModel} />
-        )}
+        {step !== STEPS.LANDING && (
+          <div style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 24px' }}>
+            <div className="top-progress">
+              <div>
+                Étape {currentStepIndex} sur {totalSteps}
+              </div>
+              <div className="top-progress-bar">
+                <div className="top-progress-bar-fill" style={{ width: `${progress}%` }} />
+              </div>
+            </div>
 
-        {step === STEPS.PARAMETERS && selectedModel && (
-          <ParametersStep
-            modelKey={selectedModel}
-            initialValues={parametersByModel[selectedModel]}
-            onBack={() => setStep(STEPS.MODEL)}
-            onSubmit={handleSubmitParameters}
-          />
-        )}
+            {step === STEPS.MODEL && (
+              <ModelChoiceStep selectedModel={selectedModel} onSelectModel={handleSelectModel} />
+            )}
 
-        {step === STEPS.RESULTS && estimation && (
-          <ResultsView
-            modelKey={selectedModel}
-            estimation={estimation}
-            blurred={!showDetails}
-            unlockOpen={unlockOpen}
-            onOpenUnlock={() => setUnlockOpen(true)}
-            onCloseUnlock={() => setUnlockOpen(false)}
-            onSubmitUnlock={handleUnlock}
-            parameters={parametersByModel[selectedModel]}
-            contactData={contactData}
-          />
+            {step === STEPS.PARAMETERS && selectedModel && (
+              <ParametersStep
+                modelKey={selectedModel}
+                initialValues={parametersByModel[selectedModel]}
+                onBack={() => setStep(STEPS.MODEL)}
+                onSubmit={handleSubmitParameters}
+              />
+            )}
+
+            {step === STEPS.RESULTS && estimation && (
+              <ResultsView
+                modelKey={selectedModel}
+                estimation={estimation}
+                isBlurred={isBlurred}
+                unlockOpen={unlockOpen}
+                onOpenUnlock={() => setUnlockOpen(true)}
+                onCloseUnlock={() => setUnlockOpen(false)}
+                onSubmitUnlock={handleUnlock}
+                parameters={parametersByModel[selectedModel]}
+                onEditParameters={handleEditParameters}
+              />
+            )}
+          </div>
         )}
       </div>
     </div>
