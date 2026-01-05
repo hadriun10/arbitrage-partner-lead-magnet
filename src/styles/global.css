@@ -41,7 +41,7 @@ body {
   min-height: 100vh;
   font-family: 'BDO Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
-  background-color: #ffffff;
+  background-color: #021508;
   color: var(--color-text-main);
   overflow-x: hidden;
 }
@@ -52,7 +52,7 @@ button {
 
 .app-root {
   min-height: 100vh;
-  background: #ffffff;
+  background: #021508;
   display: flex;
   justify-content: center;
   position: relative;
@@ -80,6 +80,7 @@ button {
   pointer-events: none;
   z-index: 0;
   filter: blur(60px);
+  display: none;
 }
 
 .app-root .app-shell {
@@ -92,12 +93,17 @@ button {
   max-width: 960px;
 }
 
+.app-shell:has(.landing-container) {
+  max-width: 100%;
+}
+
 .card {
   background: #05150A;
   border-radius: 0;
-  box-shadow: var(--shadow-soft);
-  padding: 40px 56px 48px;
+  box-shadow: none;
+  padding: 20px 56px 48px;
 }
+
 
 .card .card-header-title {
   color: #ffffff;
@@ -109,14 +115,16 @@ button {
 
 /* Landing page specific styles - no card background */
 .landing-container {
-  max-width: 960px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
   text-align: center;
-  padding: 40px 20px;
+  padding: 20px 20px 40px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  background-color: #021508;
 }
 
 .landing-hero {
@@ -124,15 +132,75 @@ button {
 }
 
 .landing-logo {
-  width: 80px;
-  height: 80px;
+  width: 133px;
+  height: 36px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+}
+
+.landing-logo img {
+  width: 133px;
+  height: 36px;
+  object-fit: contain;
+}
+
+.landing-image {
+  width: 307px;
+  height: 84px;
   margin: 0 auto 32px;
-  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-image img {
+  width: 307px;
+  height: 84px;
+  object-fit: contain;
+}
+
+.landing-title {
+  font-family: 'Libre Caslon Condensed', 'Times New Roman', serif;
+  font-size: 64px;
+  font-weight: normal;
+  line-height: 1.1;
+  text-align: center;
+  margin: 48px 0 12px;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+}
+
+.landing-title em {
+  font-style: italic;
+}
+
+.landing-subtitle {
+  font-size: 16px;
+  color: #ffffff;
+  text-align: center;
+  margin: 0 0 24px;
+  opacity: 0.9;
 }
 
 .landing-button-wrapper {
   max-width: 620px;
-  margin: 0 auto;
+  margin: 64px auto 0;
+}
+
+.landing-container .primary-button {
+  background: #235523;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+}
+
+.landing-container .primary-button:hover {
+  background: #2a662a;
+  border-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Modal overlay and animation */
@@ -201,6 +269,7 @@ button {
 .card-header-title {
   font-family: 'Libre Caslon Condensed', 'Times New Roman', serif;
   font-size: 40px;
+  font-weight: normal;
   line-height: 1.1;
   text-align: center;
   margin: 0 0 12px;
@@ -219,8 +288,18 @@ button {
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
-  color: var(--color-text-muted);
-  margin-bottom: 32px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #021508;
+  padding: 16px 0;
+  margin-top: -16px;
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 .top-progress-bar {
@@ -234,7 +313,7 @@ button {
 
 .top-progress-bar-fill {
   height: 100%;
-  background: var(--color-green-dark);
+  background: #ffffff;
   transition: width 0.25s ease-out;
 }
 
@@ -254,7 +333,7 @@ button {
 .field-with-unit {
   display: flex;
   align-items: center;
-  border-radius: 0;
+  border-radius: 10px;
   border: 1px solid var(--color-border);
   background-color: #faf7f2;
   padding: 0 12px;
@@ -289,6 +368,7 @@ button {
 
 .card .field-with-unit {
   background-color: #D0D8D0;
+  border-radius: 10px;
 }
 
 .card .field-label {
@@ -315,6 +395,7 @@ button {
 
 .card .field-input {
   background-color: #D0D8D0;
+  border-radius: 10px;
 }
 
 .field-input:focus {
@@ -355,6 +436,8 @@ button {
   background: #235523;
   color: #ffffff;
   border: 1px solid #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .primary-button:hover {
@@ -382,6 +465,14 @@ button {
 
 .primary-button-icon {
   font-size: 18px;
+}
+
+.landing-container .legal-text {
+  margin-top: 48px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #ffffff;
+  max-width: 640px;
 }
 
 .legal-text {
@@ -413,6 +504,22 @@ button {
   text-align: center;
 }
 
+.landing-container .tagline-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(16, 49, 38, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.landing-container .tagline-icon svg {
+  stroke: #ffffff;
+  color: #ffffff;
+}
+
 .tagline-icon {
   width: 48px;
   height: 48px;
@@ -424,6 +531,12 @@ button {
   color: var(--color-text-main);
 }
 
+.landing-container .tagline-text {
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
 .tagline-text {
   font-size: 14px;
   color: var(--color-text-muted);
@@ -433,34 +546,36 @@ button {
 .model-buttons-row {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 24px;
+  gap: 14px 14px;
+  row-gap: 48px;
+  margin-top: 40px;
+  margin-bottom: 24px;
 }
 
 .model-button:nth-child(1) {
-  grid-column: 2 / 4;
-}
-
-.model-button:nth-child(2) {
-  grid-column: 4 / 6;
-}
-
-.model-button:nth-child(3) {
   grid-column: 1 / 3;
 }
 
-.model-button:nth-child(4) {
+.model-button:nth-child(2) {
   grid-column: 3 / 5;
 }
 
-.model-button:nth-child(5) {
+.model-button:nth-child(3) {
   grid-column: 5 / 7;
 }
 
+.model-button:nth-child(4) {
+  grid-column: 2 / 4;
+}
+
+.model-button:nth-child(5) {
+  grid-column: 4 / 6;
+}
+
 .model-button {
-  border-radius: 0;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 24px 20px;
+  padding: 0;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   text-align: center;
@@ -468,8 +583,20 @@ button {
     box-shadow 0.15s ease-out, transform 0.05s ease-out;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  align-items: stretch;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.15);
+  overflow: visible;
+  min-height: 200px;
+}
+
+.model-button-icon-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: -24px;
+  margin-bottom: 8px;
+  z-index: 2;
 }
 
 .model-button-icon {
@@ -480,8 +607,8 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  margin-bottom: 4px;
+  background: #05150A;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .model-button-icon svg {
@@ -489,34 +616,56 @@ button {
   height: 28px;
 }
 
+.model-button-content {
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  text-align: center;
+}
+
 .model-button-title {
   font-size: 18px;
   font-weight: 600;
   color: #ffffff;
   line-height: 1.3;
+  margin-bottom: 8px;
 }
 
 .model-button-examples {
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.4;
-  margin-top: 4px;
+  margin-bottom: auto;
+  flex: 1;
+}
+
+.model-button-separator {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+  margin-bottom: 8px;
+  width: 100%;
 }
 
 .model-button-valuation {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.5);
   font-style: italic;
-  margin-top: 4px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 0;
+  padding-bottom: 0;
   width: 100%;
+  line-height: 1.4;
+  max-height: 2.8em;
+  overflow: hidden;
 }
 
 .model-button.selected {
   border-color: #05aa33;
   background-color: rgba(5, 170, 51, 0.15);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: none;
   transform: translateY(-2px);
 }
 
@@ -532,14 +681,16 @@ button {
 }
 
 .section {
-  margin-top: 32px;
-  padding-top: 8px;
+  margin-top: 48px;
+  padding-top: 32px;
   border-top: 1px solid rgba(216, 209, 201, 0.7);
 }
+
 
 .card .section-title {
   font-family: 'Libre Caslon Condensed', serif;
   font-size: 22px;
+  font-weight: normal;
   margin: 0 0 12px;
   color: #ffffff;
 }
@@ -594,6 +745,7 @@ button {
 .results-hero-title {
   font-family: 'Libre Caslon Condensed', serif;
   font-size: 32px;
+  font-weight: normal;
   margin: 0;
 }
 
@@ -622,6 +774,7 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.05);
   padding: 32px 26px;
+  border-radius: 12px;
 }
 
 .card .results-hero-grid {
@@ -744,6 +897,7 @@ button {
   background: rgba(255, 255, 255, 0.05);
   padding: 20px 26px;
   position: relative;
+  border-radius: 12px;
 }
 
 .card .results-methodology-card-with-cta {
@@ -759,6 +913,7 @@ button {
 .card .results-resources-card {
   padding: 20px 26px 20px;
   position: relative;
+  border-radius: 12px;
 }
 
 .card .results-resources-content {
@@ -803,6 +958,7 @@ button {
   cursor: pointer;
   transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
   white-space: nowrap;
+  border-radius: 10px;
 }
 
 .card .results-download-button:hover {
@@ -901,6 +1057,7 @@ button {
   position: relative;
   z-index: 2;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  border-radius: 12px;
 }
 
 .results-cta-title {
@@ -917,7 +1074,7 @@ button {
 .results-cta-button {
   margin-top: 16px;
   border: none;
-  border-radius: 0;
+  border-radius: 10px;
   padding: 12px 20px;
   background: #f0e7d9;
   color: #121212;
@@ -956,6 +1113,14 @@ button {
   border-radius: 18px;
   box-shadow: 0 22px 48px rgba(0, 0, 0, 0.22);
   padding: 28px 32px 30px;
+}
+
+.modal-panel .field-input {
+  border-radius: 10px;
+}
+
+.modal-panel .primary-button {
+  border-radius: 10px;
 }
 
 .modal-title {

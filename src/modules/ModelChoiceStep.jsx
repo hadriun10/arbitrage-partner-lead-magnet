@@ -85,10 +85,15 @@ export function ModelChoiceStep({ selectedModel, onSelectModel }) {
             }
             onClick={() => onSelectModel(model.key)}
           >
-            <div className="model-button-icon">{model.icon}</div>
-            <div className="model-button-title">{model.title}</div>
-            <div className="model-button-examples">{model.examples}</div>
-            <div className="model-button-valuation">Valorisation : {model.valuation}</div>
+            <div className="model-button-icon-wrapper">
+              <div className="model-button-icon">{model.icon}</div>
+            </div>
+            <div className="model-button-content">
+              <div className="model-button-title">{model.title}</div>
+              <div className="model-button-examples">{model.examples}</div>
+              <div className="model-button-separator"></div>
+              <div className="model-button-valuation">Valorisation : {model.valuation}</div>
+            </div>
           </button>
         ))}
       </div>

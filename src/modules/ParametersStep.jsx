@@ -149,9 +149,9 @@ export function ParametersStep({ modelKey, initialValues, onBack, onSubmit }) {
   return (
     <div className="card">
       <h1 className="card-header-title">{title}</h1>
-      <p className="card-header-subtitle">
+      <p className="card-header-subtitle" style={{ textAlign: 'left' }}>
         Chaque question correspond à un levier économique réel. Répondez avec un ordre de
-        grandeur : l’outil appliquera des hypothèses prudentes lorsque des données sont
+        grandeur : l'outil appliquera des hypothèses prudentes lorsque des données sont
         manquantes.
       </p>
 
@@ -241,7 +241,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
         <h2 className="section-title">1. Valeur économique d’un client</h2>
         <div className="field">
           <label className="field-label">
-            Chiffre d’affaires annuel moyen par client (€) <span>*</span>
+            Chiffre d'affaires annuel moyen par client - ARR (€) <span>*</span>
           </label>
           <div className="field-with-unit">
             <input
@@ -253,9 +253,9 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
             <span className="field-unit">€</span>
           </div>
         </div>
-        <div className="field-grid" style={{ marginTop: 20 }}>
-          <div className="field">
-            <label className="field-label">Durée moyenne d’un contrat (années)</label>
+        <div style={{ marginTop: 20, display: 'flex', alignItems: 'flex-start', gap: '16px', flexWrap: 'wrap' }}>
+          <div className="field" style={{ flex: '1 1 0', minWidth: '200px' }}>
+            <label className="field-label">Durée moyenne d'un client* (années)</label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -266,7 +266,10 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
               <span className="field-unit">ans</span>
             </div>
           </div>
-          <div className="field">
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px', minWidth: '40px' }}>
+            <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '14px' }}>Ou</span>
+          </div>
+          <div className="field" style={{ flex: '1 1 0', minWidth: '200px' }}>
             <label className="field-label">Churn annuel (%)</label>
             <div className="field-with-unit">
               <input
@@ -278,9 +281,6 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
               <span className="field-unit">%</span>
             </div>
           </div>
-        </div>
-        <div className="field-helper" style={{ marginTop: 6 }}>
-          Renseignez soit la durée moyenne, soit le churn annuel. L’outil complètera l’autre.
         </div>
         <div className="field" style={{ marginTop: 16 }}>
           <label className="field-label">
@@ -305,7 +305,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
         <div className="field-grid" style={{ gridTemplateColumns: '1fr' }}>
           <div className="field">
             <label className="field-label">
-              Introductions qualifiées par mois (meilleur collaborateur)
+              Combien d'introductions qualifiées votre meilleur collaborateur vous amène-t-il chaque trimestre en moyenne (#)
             </label>
             <div className="field-with-unit">
               <input
@@ -314,11 +314,11 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
                 value={values.introsPerQuarter || ''}
                 onChange={onChange('introsPerQuarter')}
               />
-              <span className="field-unit">/ mois</span>
+              <span className="field-unit">/ trimestre</span>
             </div>
             <div className="field-helper">
-              Si inconnu, indiquez un ordre de grandeur. L’outil applique un minimum de 1,5× sur
-              ce levier.
+              Si vous n'avez pas d'équipe commerciale, renseignez un objectif ou utilisez notre estimation.
+              (Nous viserons au minimum 1,5× ce niveau.)
             </div>
           </div>
           <div className="field">
@@ -345,7 +345,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Multiple de valorisation de l'ARR <span>*</span>
+              Multiple de valorisation de l'ARR dans votre secteur (#) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input

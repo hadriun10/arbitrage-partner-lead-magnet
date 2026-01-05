@@ -5,26 +5,21 @@ export function Landing({ onStart }) {
     <div className="landing-container">
       <div className="landing-hero">
         <div className="landing-logo">
-          <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
-            <circle cx="50" cy="50" r="8" fill="#103126"/>
-            <circle cx="50" cy="20" r="10" fill="#103126"/>
-            <circle cx="73.5" cy="30" r="10" fill="#103126"/>
-            <circle cx="83.5" cy="55" r="10" fill="#103126"/>
-            <circle cx="73.5" cy="80" r="10" fill="#103126"/>
-            <circle cx="26.5" cy="80" r="10" fill="#103126"/>
-            <circle cx="16.5" cy="55" r="10" fill="#103126"/>
-            <circle cx="26.5" cy="30" r="10" fill="#103126"/>
-          </svg>
+          <img src="/logo_arbrigrage_blanc.png" alt="Arbitrage Partners" width="133" height="36" />
+        </div>
+        <div className="landing-image">
+          <img src="/image 4700.png" alt="" width="307" height="84" />
         </div>
         
-        <h1 className="card-header-title">
-          Estimez l'impact financier
+        <h1 className="landing-title">
+          Estimez le <em>gain économique</em> d'une
           <br />
-          d'une collaboration avec Arbitrage Partners
+          collaboration avec Arbitrage Partners
         </h1>
-        <p className="card-header-subtitle">
-          Obtenez une estimation immédiate du revenu additionnel et du gain de valorisation que
-          votre entreprise pourrait activer.
+        <p className="landing-subtitle">
+          Obtenez une estimation immédiate du revenu additionnel et du gain de valorisation
+          <br />
+          que votre entreprise pourrait activer sur un trimestre.
         </p>
       </div>
 

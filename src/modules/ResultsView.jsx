@@ -33,6 +33,28 @@ export function ResultsView({
   // isBlurred gère à la fois le flou ET la visibilité du CTA
   // true = flouté + CTA visible, false = déflouté + CTA caché
 
+  // Calcul de la valeur réelle d'un deal selon le modèle
+  const getDealValue = () => {
+    if (!estimation.details || !parameters) return 0;
+    
+    switch (modelKey) {
+      case 'recurring':
+        return (parameters.annualRevenuePerClient || 0) * ((estimation.details.incrementalMarginPct || 0) / 100);
+      case 'projects':
+        return (parameters.avgContractValue || 0) * ((estimation.details.marginPct || 0) / 100);
+      case 'transactions':
+        return (estimation.details.annualisedRevenuePerMandate || 0) * ((estimation.details.netMarginPct || 0) / 100);
+      case 'financing':
+        return (estimation.details.annualRevenuePerDeal || 0) * ((estimation.details.netMarginPct || 0) / 100);
+      case 'asset_management':
+        return (estimation.details.annualRevenuePerRelation || 0) * ((estimation.details.netMarginPct || 0) / 100);
+      default:
+        return 0;
+    }
+  };
+
+  const dealValue = getDealValue();
+
   return (
     <>
       <div className="card">
@@ -44,9 +66,24 @@ export function ResultsView({
         </div>
 
         <div className="results-hero-card">
-          <div className="results-hero-grid">
+          <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr auto 1fr auto 1fr' }}>
             <div className="results-hero-item">
-              <div className="results-hero-item-label">Chiffre d'affaires annuel débloquable</div>
+              <div className="results-hero-item-label">Valeur réelle d'un deal</div>
+              <div
+                className={
+                  isBlurred
+                    ? 'results-hero-item-amount results-blurred'
+                    : 'results-hero-item-amount'
+                }
+              >
+                {formatEuroCompact(dealValue)}
+              </div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
+            </div>
+            <div className="results-hero-item">
+              <div className="results-hero-item-label">Valeur d'un pipeline</div>
               <div
                 className={
                   isBlurred
@@ -57,8 +94,11 @@ export function ResultsView({
                 {formatEuroCompact(estimation.additionalRevenue)}
               </div>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
+            </div>
             <div className="results-hero-item">
-              <div className="results-hero-item-label">Gain de valorisation estimé</div>
+              <div className="results-hero-item-label">Gain de valorisation</div>
               <div
                 className={
                   isBlurred
@@ -413,7 +453,8 @@ export function ResultsView({
                 color: 'rgba(255, 255, 255, 0.6)',
                 textDecoration: 'underline',
                 fontSize: '12px',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                borderRadius: '10px'
               }}
             >
               Modifier mes informations

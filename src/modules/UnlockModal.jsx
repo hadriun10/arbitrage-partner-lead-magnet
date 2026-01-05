@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export function UnlockModal({ onClose, onSubmit }) {
   const [form, setForm] = useState({
     firstName: '',
-    lastName: '',
+    phone: '',
     email: '',
     company: '',
     role: '',
@@ -36,7 +36,7 @@ export function UnlockModal({ onClose, onSubmit }) {
           </p>
 
           <div className="modal-grid">
-            <div className="field">
+            <div className="field" style={{ gridColumn: '1 / -1' }}>
               <label className="field-label">
                 Prénom <span>*</span>
               </label>
@@ -49,18 +49,7 @@ export function UnlockModal({ onClose, onSubmit }) {
             </div>
             <div className="field">
               <label className="field-label">
-                Nom <span>*</span>
-              </label>
-              <input
-                type="text"
-                className="field-input"
-                value={form.lastName}
-                onChange={handleChange('lastName')}
-              />
-            </div>
-            <div className="field">
-              <label className="field-label">
-                Email professionnel <span>*</span>
+                Email <span>*</span>
               </label>
               <input
                 type="email"
@@ -71,17 +60,19 @@ export function UnlockModal({ onClose, onSubmit }) {
             </div>
             <div className="field">
               <label className="field-label">
-                Entreprise <span>*</span>
+                Téléphone <span>*</span>
               </label>
               <input
-                type="text"
+                type="tel"
                 className="field-input"
-                value={form.company}
-                onChange={handleChange('company')}
+                value={form.phone}
+                onChange={handleChange('phone')}
               />
             </div>
-            <div className="field">
-              <label className="field-label">Fonction</label>
+            <div className="field" style={{ gridColumn: '1 / -1' }}>
+              <label className="field-label">
+                Entreprise / Fonction <span>*</span>
+              </label>
               <input
                 type="text"
                 className="field-input"
@@ -90,7 +81,9 @@ export function UnlockModal({ onClose, onSubmit }) {
               />
             </div>
             <div className="field" style={{ gridColumn: '1 / -1' }}>
-              <label className="field-label">Contexte ou objectif (optionnel)</label>
+              <label className="field-label">
+                Contexte ou objectif <span>*</span>
+              </label>
               <textarea
                 className="field-input"
                 rows={3}
@@ -122,6 +115,7 @@ export function UnlockModal({ onClose, onSubmit }) {
     </div>
   );
 }
+
 
 
 
