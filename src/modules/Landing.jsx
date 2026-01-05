@@ -60,12 +60,18 @@ export function Landing({ onStart }) {
           </div>
         </div>
 
-        <p className="legal-text">
-          <span className="legal-text-strong">Basé sur des données réelles.</span> L'estimation
-          repose sur vos données, sur des hypothèses conservatrices et sur des multiples
-          sectoriels observés. Elle est indicative, non contractuelle, et conforme aux pratiques
-          professionnelles.
-        </p>
+        <div className="landing-legal-card">
+          <div className="landing-legal-icon-wrapper">
+            <div className="landing-legal-icon">
+              <div className="landing-legal-icon-text">Basé sur des données réelles</div>
+            </div>
+          </div>
+          <div className="landing-legal-content">
+            <div className="landing-legal-text">
+              L'estimation repose sur vos données, sur des hypothèses conservatrices et sur des multiples sectoriels observés. Elle est indicative, non contractuelle, et conforme aux pratiques professionnelles.
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
