@@ -883,6 +883,39 @@ button {
   line-height: 1.2;
 }
 
+.card .results-hero-item-amount-first-block {
+  font-family: 'BDO Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-style: italic;
+  color: #61b979;
+  text-shadow: 0 1px 4px rgba(97, 185, 121, 0.4);
+  font-size: 32px;
+}
+
+.results-hero-grid-first-block .results-hero-item {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.results-hero-grid-first-block .results-hero-item-amount {
+  font-size: 32px;
+  align-self: flex-start;
+  text-align: left;
+}
+
+.results-hero-arrow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 0;
+  align-self: flex-start;
+  margin-top: 0;
+}
+
+.results-text-green-highlight {
+  color: #61b979;
+  text-shadow: 0 1px 4px rgba(97, 185, 121, 0.4);
+}
+
 .card .results-hero-item-amount-underlined {
   text-decoration: underline;
   text-decoration-color: #05aa33;
@@ -1029,6 +1062,7 @@ button {
   padding: 20px 26px;
   position: relative;
   border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(5, 170, 51, 0.12);
 }
 
 .card .results-methodology-card-with-cta {

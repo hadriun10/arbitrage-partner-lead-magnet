@@ -4,18 +4,8 @@ import { UnlockModal } from './UnlockModal.jsx';
 
 function formatEuroCompact(value) {
   if (!value || Number.isNaN(value)) return '—';
-  const abs = Math.abs(value);
-  let formatted = '';
-  if (abs >= 1_000_000_000) {
-    formatted = `${(value / 1_000_000_000).toFixed(1)} Md€`;
-  } else if (abs >= 1_000_000) {
-    formatted = `${(value / 1_000_000).toFixed(1)} M€`;
-  } else if (abs >= 1_000) {
-    formatted = `${(value / 1_000).toFixed(1)} k€`;
-  } else {
-    formatted = `${Math.round(value).toLocaleString('fr-FR')} €`;
-  }
-  return formatted.replace('.0', '');
+  const rounded = Math.round(value);
+  return `${rounded.toLocaleString('fr-FR')} €`;
 }
 
 function capitalizeFirst(str) {
@@ -176,7 +166,7 @@ export function ResultsView({
         <div className="results-hero-header">
           <h1 className="results-hero-title">Votre estimation de l'impact économique d'une collaboration avec Arbitrage Partners</h1>
           <p className="results-hero-subtitle">
-            Calculée à partir des données que vous avez fournies et des standards de votre secteur.
+            Calculée à partir <span className="results-text-green-highlight">des données que vous avez fournies</span> et des standards de votre secteur.
           </p>
         </div>
 
@@ -185,13 +175,13 @@ export function ResultsView({
           <div className="results-methodology-section" style={{ marginTop: '24px' }}>
             <div className="results-methodology-card">
               <h3 className="results-section-block-title">VOS CHIFFRES</h3>
-              <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr auto 1fr auto 1fr', marginTop: '16px' }}>
-                <div className="results-hero-item">
+              <div className="results-hero-grid results-hero-grid-first-block" style={{ gridTemplateColumns: '1fr auto 1fr auto 1fr', marginTop: '16px' }}>
+                <div className="results-hero-item results-hero-item-left">
                   <div
                     className={
                       isBlurred
-                        ? 'results-hero-item-amount results-blurred'
-                        : 'results-hero-item-amount'
+                        ? 'results-hero-item-amount results-hero-item-amount-first-block results-blurred'
+                        : 'results-hero-item-amount results-hero-item-amount-first-block'
                     }
                   >
                     {formatEuroCompact(yourFigures.revenuePerContract)}
@@ -204,15 +194,15 @@ export function ResultsView({
                       : 'Revenu annuel moyen par contrat'}
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                <div className="results-hero-arrow">
                   <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
                 </div>
-                <div className="results-hero-item">
+                <div className="results-hero-item results-hero-item-left">
                   <div
                     className={
                       isBlurred
-                        ? 'results-hero-item-amount results-blurred'
-                        : 'results-hero-item-amount'
+                        ? 'results-hero-item-amount results-hero-item-amount-first-block results-blurred'
+                        : 'results-hero-item-amount results-hero-item-amount-first-block'
                     }
                   >
                     {Math.round(yourFigures.signatureRate)}%
@@ -223,15 +213,15 @@ export function ResultsView({
                       : 'Taux de transformation moyen'}
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                <div className="results-hero-arrow">
                   <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
                 </div>
-                <div className="results-hero-item">
+                <div className="results-hero-item results-hero-item-left">
                   <div
                     className={
                       isBlurred
-                        ? 'results-hero-item-amount results-blurred'
-                        : 'results-hero-item-amount'
+                        ? 'results-hero-item-amount results-hero-item-amount-first-block results-blurred'
+                        : 'results-hero-item-amount results-hero-item-amount-first-block'
                     }
                   >
                     {formatEuroCompact(yourFigures.revenuePerIntro)}
@@ -270,7 +260,7 @@ export function ResultsView({
                     Soit 1,5× les {Math.round(collaborationHypothesis.bestCollaboratorIntros)} {modelKey === 'projects' ? 'opportunités qualifiées' : 'introductions qualifiées'} que produit votre meilleur collaborateur.
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                <div className="results-hero-arrow">
                   <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
                 </div>
                 <div className="results-hero-item">
