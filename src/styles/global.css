@@ -187,7 +187,7 @@ button {
 
 .landing-button-wrapper {
   max-width: 620px;
-  margin: 64px auto 0;
+  margin: 0 auto;
 }
 
 .landing-container .primary-button {
@@ -195,6 +195,8 @@ button {
   border: 1px solid #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .landing-container .primary-button:hover {
@@ -538,7 +540,7 @@ button {
 }
 
 .landing-legal-card {
-  max-width: 100%;
+  max-width: 900px;
   margin: 48px auto 0;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -575,12 +577,13 @@ button {
 }
 
 .landing-legal-icon-text {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   color: #ffffff;
   text-align: center;
   line-height: 1.3;
   white-space: nowrap;
+  text-transform: uppercase;
 }
 
 .landing-legal-content {
@@ -589,9 +592,9 @@ button {
 }
 
 .landing-legal-text {
-  font-size: 11px;
+  font-size: 14px;
   color: #ffffff;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .tagline-text {
@@ -847,6 +850,22 @@ button {
   text-align: center;
 }
 
+.card .results-hero-item-left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.card .results-hero-item-amount {
+  align-self: center;
+  width: 100%;
+  text-align: center;
+}
+
+.card .results-hero-item-left .results-hero-item-amount {
+  align-self: flex-start;
+  text-align: left;
+}
+
 .card .results-hero-item-label {
   font-size: 11px;
   letter-spacing: 0.12em;
@@ -862,6 +881,61 @@ button {
   color: #ffffff;
   font-weight: 600;
   line-height: 1.2;
+}
+
+.card .results-hero-item-amount-underlined {
+  text-decoration: underline;
+  text-decoration-color: #05aa33;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.card .results-hero-item-description {
+  margin-top: 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: left;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.card .results-hero-item-description-centered {
+  margin-top: 16px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: center;
+  width: 100%;
+}
+
+.card .results-hero-item-explanation {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: left;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.results-section-block-title {
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  font-weight: 600;
 }
 
 .results-hero-label {

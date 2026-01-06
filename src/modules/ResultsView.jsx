@@ -18,6 +18,11 @@ function formatEuroCompact(value) {
   return formatted.replace('.0', '');
 }
 
+function capitalizeFirst(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function ResultsView({
   modelKey,
   estimation,
@@ -55,65 +60,297 @@ export function ResultsView({
 
   const dealValue = getDealValue();
 
+  // Calculs pour les 3 blocs selon le modèle
+  const getYourFigures = () => {
+    if (!parameters || !estimation.details) return null;
+
+    switch (modelKey) {
+      case 'recurring':
+        return {
+          revenuePerContract: parameters.annualRevenuePerClient || 0,
+          signatureRate: parameters.convIntroToClient || 0,
+          revenuePerIntro: (parameters.annualRevenuePerClient || 0) * ((parameters.convIntroToClient || 0) / 100)
+        };
+      case 'projects':
+        return {
+          revenuePerContract: parameters.avgContractValue || 0,
+          signatureRate: parameters.convOppToClient || 0,
+          revenuePerIntro: (parameters.avgContractValue || 0) * ((parameters.convOppToClient || 0) / 100)
+        };
+      case 'transactions':
+        return {
+          revenuePerContract: estimation.details.annualisedRevenuePerMandate || 0,
+          signatureRate: parameters.convIntroToMandate || 0,
+          revenuePerIntro: (estimation.details.annualisedRevenuePerMandate || 0) * ((parameters.convIntroToMandate || 0) / 100)
+        };
+      case 'financing':
+        return {
+          revenuePerContract: estimation.details.annualRevenuePerDeal || 0,
+          signatureRate: parameters.convIntroToFinancing || 0,
+          revenuePerIntro: (estimation.details.annualRevenuePerDeal || 0) * ((parameters.convIntroToFinancing || 0) / 100)
+        };
+      case 'asset_management':
+        return {
+          revenuePerContract: estimation.details.annualRevenuePerRelation || 0,
+          signatureRate: parameters.convIntroToRelationship || 0,
+          revenuePerIntro: (estimation.details.annualRevenuePerRelation || 0) * ((parameters.convIntroToRelationship || 0) / 100)
+        };
+      default:
+        return null;
+    }
+  };
+
+  const getCollaborationHypothesis = () => {
+    if (!parameters || !estimation.details) return null;
+
+    const UPLIFT = 1.5;
+    let introsPerQuarter = 0;
+    let conversionRate = 0;
+
+    switch (modelKey) {
+      case 'recurring':
+        introsPerQuarter = (parameters.introsPerQuarter || 0) * UPLIFT;
+        conversionRate = parameters.convIntroToClient || 0;
+        break;
+      case 'projects':
+        introsPerQuarter = (parameters.qualifiedOppPerQuarter || 0) * UPLIFT;
+        conversionRate = parameters.convOppToClient || 0;
+        break;
+      case 'transactions':
+        introsPerQuarter = (parameters.introsPerQuarter || 0) * UPLIFT;
+        conversionRate = parameters.convIntroToMandate || 0;
+        break;
+      case 'financing':
+        introsPerQuarter = (parameters.introsPerQuarter || 0) * UPLIFT;
+        conversionRate = parameters.convIntroToFinancing || 0;
+        break;
+      case 'asset_management':
+        introsPerQuarter = (parameters.introsPerQuarter || 0) * UPLIFT;
+        conversionRate = parameters.convIntroToRelationship || 0;
+        break;
+      default:
+        return null;
+    }
+
+    const clientsPerQuarter = introsPerQuarter * (conversionRate / 100);
+    const bestCollaboratorIntros = (parameters.introsPerQuarter || 0);
+
+    return {
+      introsPerQuarter,
+      clientsPerQuarter,
+      bestCollaboratorIntros
+    };
+  };
+
+  const getEconomicValue = () => {
+    if (!estimation) return null;
+
+    // Calcul du revenu annuel récurrent généré par les introductions qualifiées
+    // Pour le modèle recurring : revenu généré par les clients additionnels (ARR)
+    // Pour les autres modèles : revenu additionnel calculé
+    let annualRevenueFromIntros = 0;
+    
+    if (modelKey === 'recurring' && parameters && estimation.details) {
+      // Le revenu annuel récurrent correspond à l'ARR généré par les nouveaux clients
+      // C'est le CA par client × nombre de clients additionnels par an
+      annualRevenueFromIntros = (parameters.annualRevenuePerClient || 0) * (estimation.details.additionalClientsPerYear || 0);
+    } else {
+      // Pour les autres modèles, utiliser le revenu additionnel calculé
+      annualRevenueFromIntros = estimation.additionalRevenue || 0;
+    }
+
+    return {
+      annualRevenue: annualRevenueFromIntros,
+      valuationGain: estimation.valuationGain || 0,
+      arrMultiple: estimation.details?.arrMultiple || estimation.details?.ebitdaMultiple || estimation.details?.mgmtFeesMultiple || 0
+    };
+  };
+
+  const yourFigures = getYourFigures();
+  const collaborationHypothesis = getCollaborationHypothesis();
+  const economicValue = getEconomicValue();
+
   return (
     <>
       <div className="card">
         <div className="results-hero-header">
-          <h1 className="results-hero-title">Votre estimation</h1>
+          <h1 className="results-hero-title">Votre estimation de l'impact économique d'une collaboration avec Arbitrage Partners</h1>
           <p className="results-hero-subtitle">
-            Estimation indicative basée sur vos réponses
+            Calculée à partir des données que vous avez fournies et des standards de votre secteur.
           </p>
         </div>
 
-        <div className="results-hero-card">
-          <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr auto 1fr auto 1fr' }}>
-            <div className="results-hero-item">
-              <div className="results-hero-item-label">Valeur réelle d'un deal</div>
-              <div
-                className={
-                  isBlurred
-                    ? 'results-hero-item-amount results-blurred'
-                    : 'results-hero-item-amount'
-                }
-              >
-                {formatEuroCompact(dealValue)}
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
-              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
-            </div>
-            <div className="results-hero-item">
-              <div className="results-hero-item-label">Valeur d'un pipeline</div>
-              <div
-                className={
-                  isBlurred
-                    ? 'results-hero-item-amount results-blurred'
-                    : 'results-hero-item-amount'
-                }
-              >
-                {formatEuroCompact(estimation.additionalRevenue)}
-              </div>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
-              <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
-            </div>
-            <div className="results-hero-item">
-              <div className="results-hero-item-label">Gain de valorisation</div>
-              <div
-                className={
-                  isBlurred
-                    ? 'results-hero-item-amount results-blurred'
-                    : 'results-hero-item-amount'
-                }
-              >
-                {formatEuroCompact(estimation.valuationGain)}
+        {/* Section 1: VOS CHIFFRES */}
+        {yourFigures && (
+          <div className="results-methodology-section" style={{ marginTop: '24px' }}>
+            <div className="results-methodology-card">
+              <h3 className="results-section-block-title">VOS CHIFFRES</h3>
+              <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr auto 1fr auto 1fr', marginTop: '16px' }}>
+                <div className="results-hero-item">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {formatEuroCompact(yourFigures.revenuePerContract)}
+                  </div>
+                  <div className="results-hero-item-description">
+                    {modelKey === 'recurring' 
+                      ? 'Revenu annuel récurrent moyen généré par un contrat'
+                      : modelKey === 'projects'
+                      ? 'Valeur moyenne d\'un contrat'
+                      : 'Revenu annuel moyen par contrat'}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
+                </div>
+                <div className="results-hero-item">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {Math.round(yourFigures.signatureRate)}%
+                  </div>
+                  <div className="results-hero-item-description">
+                    {modelKey === 'recurring' || modelKey === 'projects'
+                      ? 'Taux de signature moyen d\'une opportunité qualifiée'
+                      : 'Taux de transformation moyen'}
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
+                </div>
+                <div className="results-hero-item">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {formatEuroCompact(yourFigures.revenuePerIntro)}
+                  </div>
+                  <div className="results-hero-item-description">
+                    {modelKey === 'recurring'
+                      ? 'Revenu annuel récurrent moyen généré par une introduction qualifiée'
+                      : 'Revenu moyen généré par une introduction qualifiée'}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {/* Section 2: NOTRE HYPOTHÈSE DE COLLABORATION */}
+        {collaborationHypothesis && (
+          <div className="results-methodology-section">
+            <div className="results-methodology-card">
+              <h3 className="results-section-block-title">NOTRE HYPOTHÈSE DE COLLABORATION</h3>
+              <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr auto 1fr', marginTop: '16px' }}>
+                <div className="results-hero-item">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {Math.round(collaborationHypothesis.introsPerQuarter)}
+                  </div>
+                  <div className="results-hero-item-description-centered">
+                    {capitalizeFirst(modelKey === 'projects' ? 'opportunités qualifiées par trimestre' : 'introductions qualifiées par trimestre')}
+                  </div>
+                  <div className="results-hero-item-explanation">
+                    Soit 1,5× les {Math.round(collaborationHypothesis.bestCollaboratorIntros)} {modelKey === 'projects' ? 'opportunités qualifiées' : 'introductions qualifiées'} que produit votre meilleur collaborateur.
+                  </div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '32px' }}>
+                  <span style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '24px' }}>→</span>
+                </div>
+                <div className="results-hero-item">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {collaborationHypothesis.clientsPerQuarter.toFixed(1).replace('.', ',').replace(',0', '')}
+                  </div>
+                  <div className="results-hero-item-description-centered">
+                    {capitalizeFirst(modelKey === 'recurring' || modelKey === 'projects' ? 'clients' : modelKey === 'transactions' ? 'mandats' : modelKey === 'financing' ? 'financements' : 'relations')} par trimestre en moyenne
+                  </div>
+                  <div className="results-hero-item-explanation">
+                    En prenant en compte votre taux de signature de {Math.round(yourFigures?.signatureRate || 0)}%.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Section 3: VALEUR ÉCONOMIQUE POTENTIELLE */}
+        {economicValue && (
+          <div className="results-methodology-section">
+            <div className="results-methodology-card">
+              <h3 className="results-section-block-title">VALEUR ÉCONOMIQUE POTENTIELLE GÉNÉRÉE PAR UNE COLLABORATION</h3>
+              <div className="results-hero-grid" style={{ gridTemplateColumns: '1fr', marginTop: '16px', gap: '24px' }}>
+                <div className="results-hero-item results-hero-item-left">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {formatEuroCompact(economicValue.annualRevenue)}
+                  </div>
+                  <div className="results-hero-item-description">
+                    {modelKey === 'recurring'
+                      ? `Revenu annuel récurrent généré par ${Math.round(collaborationHypothesis?.introsPerQuarter || 0)} introductions qualifiées`
+                      : modelKey === 'projects'
+                      ? `Revenu additionnel généré par ${Math.round(collaborationHypothesis?.introsPerQuarter || 0)} opportunités qualifiées`
+                      : modelKey === 'transactions'
+                      ? `Revenu additionnel généré par ${Math.round(collaborationHypothesis?.introsPerQuarter || 0)} introductions qualifiées`
+                      : modelKey === 'financing'
+                      ? `Revenu additionnel généré par ${Math.round(collaborationHypothesis?.introsPerQuarter || 0)} introductions qualifiées`
+                      : `Revenu additionnel généré par ${Math.round(collaborationHypothesis?.introsPerQuarter || 0)} introductions qualifiées`}
+                  </div>
+                </div>
+                <div className="results-hero-item results-hero-item-left">
+                  <div
+                    className={
+                      isBlurred
+                        ? 'results-hero-item-amount results-blurred'
+                        : 'results-hero-item-amount'
+                    }
+                  >
+                    {formatEuroCompact(economicValue.valuationGain)}
+                  </div>
+                  <div className="results-hero-item-description">
+                    Gain de valorisation d'entreprise générée par {Math.round(collaborationHypothesis?.introsPerQuarter || 0)} {modelKey === 'projects' ? 'opportunités qualifiées' : 'introductions qualifiées'}
+                  </div>
+                  <div className="results-hero-item-explanation">
+                    {modelKey === 'recurring' 
+                      ? `En utilisant le multiple de ×${economicValue.arrMultiple} l'ARR en vigueur dans votre secteur.`
+                      : modelKey === 'asset_management'
+                      ? `En utilisant le multiple de ×${economicValue.arrMultiple} des management fees en vigueur dans votre secteur.`
+                      : `En utilisant le multiple de ×${economicValue.arrMultiple} l'EBITDA en vigueur dans votre secteur.`}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         <section className="results-methodology-section">
-          <h2 className="section-title">Méthodologie de valorisation</h2>
+          <h2 className="results-section-block-title">MÉTHODOLOGIE DE VALORISATION</h2>
           <div
             className={
               isBlurred
@@ -400,7 +637,7 @@ export function ResultsView({
         </section>
 
         <section className="results-methodology-section">
-          <h2 className="section-title">Ressources offertes</h2>
+          <h2 className="results-section-block-title">RESSOURCES OFFERTES</h2>
           <div className="results-methodology-card results-resources-card">
             <div
               className={
