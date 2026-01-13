@@ -11,13 +11,10 @@
 }
 
 @font-face {
-  font-family: 'Libre Caslon Condensed';
-  src: url('../../libre_caslon_condensed/fonts/variable/LibreCaslonCondensed[wght].ttf')
-      format('truetype'),
-    url('../../libre_caslon_condensed/fonts/otf/LibreCaslonCondensed-Regular.otf')
-      format('opentype');
+  font-family: 'Libre Caslon Text';
+  src: url('../../Libre_Caslon_Text/LibreCaslonText-Regular.ttf') format('truetype');
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -26,6 +23,30 @@
   src: url('../../bdo-grotesk/variable/BDOGrotesk-VF.ttf') format('truetype');
   font-style: normal;
   font-weight: 300 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Caslon Text';
+  src: url('../../Libre_Caslon_Text/LibreCaslonText-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Caslon Text';
+  src: url('../../Libre_Caslon_Text/LibreCaslonText-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Libre Caslon Text';
+  src: url('../../Libre_Caslon_Text/LibreCaslonText-Italic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 400;
   font-display: swap;
 }
 
@@ -91,6 +112,11 @@ button {
 .app-shell {
   width: 100%;
   max-width: 960px;
+}
+
+.app-shell:has(.results-page) {
+  max-width: 100%;
+  width: 100%;
 }
 
 .app-shell:has(.landing-container) {
@@ -163,7 +189,7 @@ button {
 }
 
 .landing-title {
-  font-family: 'Libre Caslon Condensed', 'Times New Roman', serif;
+  font-family: 'Libre Caslon Text', 'Times New Roman', serif;
   font-size: 64px;
   font-weight: normal;
   line-height: 1.1;
@@ -192,17 +218,16 @@ button {
 
 .landing-container .primary-button {
   background: #235523;
-  border: 1px solid #ffffff;
+  border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
   max-width: 400px;
   margin: 0 auto;
 }
 
 .landing-container .primary-button:hover {
   background: #2a662a;
-  border-color: #ffffff;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Modal overlay and animation */
@@ -269,7 +294,7 @@ button {
 }
 
 .card-header-title {
-  font-family: 'Libre Caslon Condensed', 'Times New Roman', serif;
+  font-family: 'Libre Caslon Text', 'Times New Roman', serif;
   font-size: 40px;
   font-weight: normal;
   line-height: 1.1;
@@ -336,7 +361,8 @@ button {
   display: flex;
   align-items: center;
   border-radius: 10px;
-  border: 1px solid var(--color-border);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
   background-color: #faf7f2;
   padding: 0 12px;
 }
@@ -363,14 +389,15 @@ button {
 }
 
 .field-with-unit:focus-within {
-  border-color: var(--color-green-dark);
-  box-shadow: 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
+  box-shadow: inset 0 0 0 0.3px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
   background-color: #D0D8D0;
 }
 
 .card .field-with-unit {
   background-color: #D0D8D0;
   border-radius: 10px;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
 }
 
 .card .field-label {
@@ -385,24 +412,26 @@ button {
 
 .field-input {
   border-radius: 0;
-  border: 1px solid var(--color-border);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
   padding: 12px 14px;
   font-size: 15px;
   background-color: #faf7f2;
   color: var(--color-text-main);
   outline: none;
-  transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out,
+  transition: box-shadow 0.15s ease-out,
     background-color 0.15s ease-out;
 }
 
 .card .field-input {
   background-color: #D0D8D0;
   border-radius: 10px;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
 }
 
 .field-input:focus {
-  border-color: var(--color-green-dark);
-  box-shadow: 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
+  box-shadow: inset 0 0 0 0.3px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
   background-color: #fff;
 }
 
@@ -437,9 +466,9 @@ button {
 .card .primary-button {
   background: #235523;
   color: #ffffff;
-  border: 1px solid #ffffff;
+  border: none;
   border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .primary-button:hover {
@@ -450,7 +479,7 @@ button {
 
 .card .primary-button:hover {
   background-color: #2a662a;
-  border-color: #ffffff;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .primary-button:active {
@@ -542,59 +571,34 @@ button {
 .landing-legal-card {
   max-width: 900px;
   margin: 48px auto 0;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: #05150a;
+  border: none;
   border-radius: 12px;
-  padding: 0;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  position: relative;
-  overflow: visible;
-  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.15);
+  gap: 16px;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
 }
 
-.landing-legal-icon-wrapper {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin-top: -18px;
-  margin-bottom: 8px;
-  z-index: 2;
-}
-
-.landing-legal-icon {
-  width: auto;
-  min-width: 180px;
-  height: 36px;
-  padding: 0 20px;
-  border-radius: 18px;
-  background: #05150A;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.landing-legal-icon-text {
+.landing-legal-title {
+  font-family: 'BDO Grotesk', sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #ffffff;
   text-align: center;
-  line-height: 1.3;
-  white-space: nowrap;
   text-transform: uppercase;
-}
-
-.landing-legal-content {
-  padding: 0 12px 4px;
-  text-align: center;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .landing-legal-text {
+  font-family: 'BDO Grotesk', sans-serif;
   font-size: 14px;
   color: #ffffff;
   line-height: 1.5;
+  text-align: left;
+  margin: 0;
 }
 
 .tagline-text {
@@ -634,18 +638,18 @@ button {
 
 .model-button {
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 2px 10px rgba(255, 255, 255, 0.15);
   padding: 0;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
   text-align: center;
-  transition: border-color 0.15s ease-out, background-color 0.15s ease-out,
+  transition: background-color 0.15s ease-out,
     box-shadow 0.15s ease-out, transform 0.05s ease-out;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   position: relative;
-  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.15);
   overflow: visible;
   min-height: 200px;
 }
@@ -668,7 +672,8 @@ button {
   justify-content: center;
   border-radius: 50%;
   background: #05150A;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
 }
 
 .model-button-icon svg {
@@ -723,9 +728,8 @@ button {
 }
 
 .model-button.selected {
-  border-color: #05aa33;
+  box-shadow: inset 0 0 0 0.3px #05aa33, 0 2px 10px rgba(255, 255, 255, 0.15);
   background-color: rgba(5, 170, 51, 0.15);
-  box-shadow: none;
   transform: translateY(-2px);
 }
 
@@ -735,7 +739,7 @@ button {
 }
 
 .model-button:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: inset 0 0 0 0.3px rgba(255, 255, 255, 0.4), 0 2px 10px rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
   transform: translateY(-1px);
 }
@@ -748,7 +752,7 @@ button {
 
 
 .card .section-title {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 22px;
   font-weight: normal;
   margin: 0 0 12px;
@@ -764,7 +768,8 @@ button {
 
 .results-card {
   border-radius: 0;
-  border: 1px solid var(--color-border);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
   padding: 18px 18px 20px;
   background: #faf7f2;
 }
@@ -776,7 +781,7 @@ button {
 }
 
 .results-value {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 26px;
 }
 
@@ -803,7 +808,7 @@ button {
 }
 
 .results-hero-title {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 32px;
   font-weight: normal;
   margin: 0;
@@ -824,14 +829,16 @@ button {
 }
 
 .results-hero-card {
-  border: 1px solid var(--color-border);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
   background: #faf7f2;
   padding: 22px 26px 20px;
   margin-top: 8px;
 }
 
 .card .results-hero-card {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
   background: rgba(255, 255, 255, 0.05);
   padding: 32px 26px;
   border-radius: 12px;
@@ -876,10 +883,10 @@ button {
 }
 
 .card .results-hero-item-amount {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 42px;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.2;
 }
 
@@ -924,7 +931,7 @@ button {
 }
 
 .card .results-hero-item-description {
-  margin-top: 16px;
+  margin-top: 4px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.5;
@@ -937,7 +944,7 @@ button {
 }
 
 .card .results-hero-item-description-centered {
-  margin-top: 16px;
+  margin-top: 4px;
   font-size: 13px;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.5;
@@ -966,7 +973,8 @@ button {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 16px;
+  margin-top: 0;
+  margin-bottom: 24px;
   line-height: 1.4;
   font-weight: 600;
 }
@@ -988,7 +996,7 @@ button {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 10px;
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
 }
 
 .card .results-hero-main {
@@ -1023,7 +1031,7 @@ button {
 }
 
 .results-hero-secondary-value {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 22px;
   color: var(--color-text-main);
 }
@@ -1041,28 +1049,30 @@ button {
 
 .results-tag {
   font-size: 11px;
-  border: 1px solid var(--color-border);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
   padding: 6px 10px;
   background: #fff;
 }
 
 .card .results-tag {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
 }
 
 .results-methodology-section {
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .card .results-methodology-card {
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 2px 20px rgba(5, 170, 51, 0.12);
   background: rgba(255, 255, 255, 0.05);
   padding: 20px 26px;
   position: relative;
   border-radius: 12px;
-  box-shadow: 0 2px 20px rgba(5, 170, 51, 0.12);
 }
 
 .card .results-methodology-card-with-cta {
@@ -1105,7 +1115,8 @@ button {
 }
 
 .card .results-methodology-row + .results-methodology-row {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: none;
+  box-shadow: inset 0 0.3px 0 0 #F5F3EF;
 }
 
 .card .results-methodology-action {
@@ -1115,13 +1126,14 @@ button {
 }
 
 .card .results-download-button {
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   padding: 8px 16px;
   font-size: 12px;
   cursor: pointer;
-  transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+  transition: background-color 0.15s ease-out, box-shadow 0.15s ease-out;
   white-space: nowrap;
   border-radius: 10px;
 }
@@ -1150,7 +1162,8 @@ button {
   font-size: 11px;
   color: rgba(255, 255, 255, 0.6);
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  border-top: none;
+  box-shadow: inset 0 0.3px 0 0 #F5F3EF;
 }
 
 .card .results-levers {
@@ -1198,18 +1211,19 @@ button {
 }
 
 .results-blurred {
-  filter: blur(5px);
+  filter: blur(12px);
   user-select: none;
 }
 
 .results-cta-over {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
   display: flex;
   justify-content: center;
-  z-index: 10;
+  align-items: center;
 }
 
 .results-cta-card {
@@ -1226,7 +1240,7 @@ button {
 }
 
 .results-cta-title {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 22px;
   margin-bottom: 8px;
 }
@@ -1289,7 +1303,7 @@ button {
 }
 
 .modal-title {
-  font-family: 'Libre Caslon Condensed', serif;
+  font-family: 'Libre Caslon Text', serif;
   font-size: 26px;
   margin: 0 0 6px;
 }
@@ -1357,6 +1371,1104 @@ button {
 
   .card .results-hero-item-amount {
     font-size: 36px;
+  }
+}
+
+/* ============================================
+   RESULTS PAGE - DESIGN FIGMA
+   ============================================ */
+
+.results-page {
+  background: #05150a;
+  color: #f5f3ef;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+/* Header */
+.results-header {
+  padding: 59px 305px 0;
+  max-width: 1512px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-logo {
+  margin-bottom: 51px;
+}
+
+.results-logo img {
+  width: 133px;
+  height: 36px;
+}
+
+.results-main-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #f5f3ef;
+  margin: 0 0 16px;
+}
+
+.results-main-title em {
+  font-style: italic;
+}
+
+.results-main-subtitle {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.3;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-text-green {
+  color: #209c01;
+  font-weight: 700;
+}
+
+.results-text-blue {
+  color: #6dc0ff;
+  font-weight: 700;
+}
+
+/* Section Titles */
+.results-section-title-small {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #f5f3ef;
+  margin: 0 0 24px;
+}
+
+/* Vos Chiffres Section */
+.results-your-figures-section {
+  padding: 0 305px;
+  margin: 40px 0;
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-your-figures-card {
+  background: #05150a;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.results-figures-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.results-figure-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.results-figure-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.results-figure-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.results-figure-amount {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 28px;
+  color: #6dc0ff;
+  line-height: 1.3;
+}
+
+.results-figure-label {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.15;
+  color: #f5f3ef;
+}
+
+.results-figure-arrow {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f5f3ef;
+  padding-top: 40px;
+}
+
+/* Collaboration Section */
+.results-collaboration-section {
+  padding: 0 305px;
+  margin: 40px 0;
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-collaboration-card {
+  background: #05150a;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.results-collaboration-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 24px;
+  align-items: start;
+  margin-top: 16px;
+}
+
+.results-collaboration-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-collaboration-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.results-collaboration-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.results-collaboration-amount {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 28px;
+  color: #209c01;
+  line-height: 1.2;
+}
+
+.results-collaboration-label {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f5f3ef;
+  line-height: 1.2;
+}
+
+.results-collaboration-explanation {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.15;
+  color: #f5f3ef;
+  margin-top: 8px;
+}
+
+.results-collaboration-explanation strong {
+  color: #6dc0ff;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.results-collaboration-arrow {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #f5f3ef;
+  padding-top: 40px;
+}
+
+/* Economic Value Section */
+.results-economic-value-section {
+  padding: 0 305px;
+  margin: 40px 0;
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 15;
+}
+
+.results-economic-value-card {
+  background: #05150a;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.results-economic-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.results-economic-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.results-economic-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.results-economic-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.results-economic-amount {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 28px;
+  color: #209c01;
+  line-height: 1.2;
+  margin-bottom: 0;
+}
+
+.results-economic-progress {
+  height: 7px;
+  background: rgba(245, 243, 239, 0.1);
+  border-radius: 2px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.results-economic-progress-bar {
+  height: 100%;
+  background: #209c01;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.2);
+  border-radius: 2px;
+}
+
+.results-economic-description {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #f5f3ef;
+  margin-bottom: 8px;
+}
+
+.results-economic-description em {
+  font-style: italic;
+  color: #6dc0ff;
+  font-weight: 700;
+}
+
+.results-economic-footnote {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.15;
+  color: #f5f3ef;
+}
+
+.results-economic-footnote em {
+  font-style: italic;
+  color: #6dc0ff;
+  font-weight: 700;
+}
+
+/* Gradient Separator */
+.results-gradient-separator-wrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  z-index: 12;
+  display: block;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.results-gradient-image-container {
+  width: 100%;
+  position: relative;
+}
+
+.results-gradient-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform: translateY(-50%);
+}
+
+/* Methodology Sections - Centered content */
+.results-page .results-methodology-section {
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-page .results-methodology-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 2px 20px rgba(5, 170, 51, 0.12);
+  border-radius: 12px;
+  padding: 20px 26px;
+}
+
+/* Who Section */
+.results-who-section {
+  background: #f5f3ef;
+  color: #05150a;
+  padding: 80px 0;
+  margin-top: 0;
+  padding-top: calc(80px + 20vw);
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.results-who-content-wrapper,
+.results-stats-grid {
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-who-content-wrapper {
+  margin-bottom: 40px;
+}
+
+.results-who-content {
+  background: #f5f3ef;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150a, 0px 4px 20px rgba(5, 21, 10, 0.1);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.results-who-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #05150a;
+  margin: 0 0 24px;
+}
+
+.results-who-text {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 18px;
+  line-height: 1.3;
+  color: #05150a;
+  margin: 0 0 16px;
+}
+
+.results-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.results-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-stat-number {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 30px;
+  line-height: 1.2;
+  color: #05150a;
+}
+
+.results-stat-label {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  line-height: 1.3;
+  color: #05150a;
+}
+
+/* Challenges Section */
+.results-challenges-section {
+  background: #f5f3ef;
+  color: #05150a;
+  padding: 80px 0;
+  width: 100%;
+}
+
+.results-challenges-header,
+.results-challenges-grid {
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-challenges-header {
+  margin-bottom: 40px;
+}
+
+.results-challenges-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #05150a;
+  margin: 0 0 8px;
+}
+
+.results-challenges-subtitle {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #05150a;
+  margin: 0;
+}
+
+.results-challenges-subtitle em {
+  font-style: italic;
+}
+
+.results-challenges-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: 115px;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.results-challenge-card {
+  background: #f5f3ef;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150a, 0px 4px 20px rgba(5, 21, 10, 0.1);
+  border-radius: 20px;
+  padding: 0;
+  display: flex;
+  overflow: hidden;
+  height: 115px;
+  align-items: stretch;
+}
+
+.results-challenge-image {
+  width: 137px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.results-challenge-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.results-challenge-content {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.results-challenge-title {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #05150a;
+  margin: 0;
+}
+
+.results-challenge-text {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #05150a;
+  margin: 0;
+}
+
+/* Clients Section */
+.results-clients-section {
+  background: #f5f3ef;
+  color: #05150a;
+  padding: 80px 0;
+  width: 100%;
+}
+
+.results-clients-title,
+.results-clients-grid {
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-clients-title {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  text-align: center;
+  color: #05150a;
+  margin: 0 0 40px;
+}
+
+.results-clients-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.results-client-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.results-client-logo img {
+  max-width: 100%;
+  height: auto;
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
+/* Criteria Section */
+.results-criteria-section {
+  background: #05150a;
+  color: #f5f3ef;
+  padding: 80px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  box-sizing: border-box;
+}
+
+.results-criteria-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.results-criteria-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-criteria-subtitle {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-criteria-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results-criteria-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.results-criteria-checkbox {
+  width: 12px;
+  height: 12px;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0px 0px 10px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.results-criteria-item p {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-criteria-item strong {
+  font-weight: 700;
+  color: #f5f3ef;
+}
+
+.results-criteria-note {
+  background: #05150a;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0px 0px 10px rgba(235, 235, 235, 0.05);
+}
+
+.results-criteria-note p {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-contact-form-wrapper {
+  background: #05150a;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.2);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.results-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results-contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-contact-label {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-contact-input {
+  background: #2b4029;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 0px 10px rgba(235, 235, 235, 0.05);
+  border-radius: 5px;
+  padding: 10px 16px;
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  color: #fff;
+}
+
+.results-contact-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 300;
+}
+
+.results-contact-button {
+  background: #f5f3ef;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0px 4px 20px 10px rgba(35, 85, 35, 0.3);
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #05150a;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.results-contact-button:hover {
+  background: #fff;
+}
+
+/* Sectors Section */
+.results-sectors-section {
+  background: #05150a;
+  color: #f5f3ef;
+  padding: 80px 0;
+  width: 100%;
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 305px;
+  padding-right: 305px;
+  box-sizing: border-box;
+}
+
+.results-sectors-title {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #f5f3ef;
+  margin: 0 0 24px;
+}
+
+.results-sectors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.results-sectors-list p {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 16px;
+  line-height: 1.3;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-sectors-list strong {
+  font-weight: 700;
+  color: #f5f3ef;
+}
+
+/* Footer */
+.results-footer {
+  background: #000;
+  color: #f5f3ef;
+  padding: 80px 0;
+  width: 100%;
+}
+
+.results-footer-content {
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.results-footer-content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 60px;
+}
+
+.results-footer-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results-footer-logo img {
+  width: 132px;
+  height: 36px;
+  margin-bottom: 24px;
+}
+
+.results-footer-definition {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #f5f3ef;
+}
+
+.results-footer-definition strong {
+  font-weight: 600;
+}
+
+.results-footer-definition span {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 10px;
+  font-weight: 200;
+}
+
+.results-footer-title {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #f5f3ef;
+  margin: 0;
+}
+
+.results-footer-text {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  color: #b6b6b6;
+  margin: 0;
+}
+
+.results-footer-link {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  color: #b6b6b6;
+  cursor: pointer;
+  margin: 0;
+}
+
+.results-footer-link:hover {
+  color: #f5f3ef;
+}
+
+/* Contact Modal */
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(4px);
+}
+
+.contact-modal-panel {
+  background: #fff;
+  border-radius: 18px;
+  padding: 32px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.22);
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-modal-close:hover {
+  color: #000;
+}
+
+.contact-modal-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 26px;
+  color: #121212;
+  margin: 0 0 8px;
+}
+
+.contact-modal-subtitle {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 13px;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.contact-modal-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-field-label {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: #121212;
+}
+
+.contact-field-input {
+  padding: 10px 16px;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px #05150A;
+  border-radius: 8px;
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  color: #121212;
+}
+
+.contact-field-input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1px #209c01;
+}
+
+.contact-modal-actions {
+  margin-bottom: 16px;
+}
+
+.contact-modal-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: #209c01;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.contact-modal-button:hover {
+  background: #1a7d01;
+}
+
+.contact-modal-footer {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.contact-modal-link {
+  color: #209c01;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.contact-modal-link:hover {
+  color: #1a7d01;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .results-header,
+  .results-your-figures-section,
+  .results-collaboration-section,
+  .results-economic-value-section,
+  .results-who-section,
+  .results-challenges-section,
+  .results-clients-section,
+  .results-criteria-section,
+  .results-sectors-section,
+  .results-footer {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .results-figures-grid,
+  .results-collaboration-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .results-figure-arrow,
+  .results-collaboration-arrow {
+    display: none;
+  }
+
+  .results-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-challenges-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-clients-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .results-criteria-section {
+    grid-template-columns: 1fr;
+  }
+
+  .results-footer-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .results-header,
+  .results-your-figures-section,
+  .results-collaboration-section,
+  .results-economic-value-section,
+  .results-who-section,
+  .results-challenges-section,
+  .results-clients-section,
+  .results-criteria-section,
+  .results-sectors-section,
+  .results-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .results-main-title {
+    font-size: 28px;
+  }
+
+  .results-who-title,
+  .results-challenges-title {
+    font-size: 28px;
+  }
+
+  .results-clients-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

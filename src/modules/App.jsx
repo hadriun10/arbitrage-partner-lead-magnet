@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Landing } from './Landing.jsx';
 import { ModelChoiceStep } from './ModelChoiceStep.jsx';
 import { ParametersStep } from './ParametersStep.jsx';
@@ -86,12 +86,19 @@ export function App() {
     }
   };
 
+  // Ouvrir automatiquement le modal quand on arrive sur la page de résultats si les résultats sont floutés
+  useEffect(() => {
+    if (step === STEPS.RESULTS && isBlurred && !unlockOpen) {
+      setUnlockOpen(true);
+    }
+  }, [step, isBlurred, unlockOpen]);
+
   return (
     <div className="app-root">
       <div className="app-shell">
         {step === STEPS.LANDING && <Landing onStart={handleStart} />}
 
-        {step !== STEPS.LANDING && (
+        {step !== STEPS.LANDING && step !== STEPS.RESULTS && (
           <div style={{ maxWidth: '960px', margin: '0 auto', padding: '40px 24px' }}>
             <div className="top-progress">
               <div>
@@ -114,21 +121,33 @@ export function App() {
                 onSubmit={handleSubmitParameters}
               />
             )}
-
-            {step === STEPS.RESULTS && estimation && (
-              <ResultsView
-                modelKey={selectedModel}
-                estimation={estimation}
-                isBlurred={isBlurred}
-                unlockOpen={unlockOpen}
-                onOpenUnlock={() => setUnlockOpen(true)}
-                onCloseUnlock={() => setUnlockOpen(false)}
-                onSubmitUnlock={handleUnlock}
-                parameters={parametersByModel[selectedModel]}
-                onEditParameters={handleEditParameters}
-              />
-            )}
           </div>
+        )}
+
+        {step === STEPS.RESULTS && estimation && (
+          <>
+            <div style={{ maxWidth: '1512px', margin: '0 auto', padding: '40px 24px 0' }}>
+              <div className="top-progress">
+                <div>
+                  Étape {currentStepIndex} sur {totalSteps}
+                </div>
+                <div className="top-progress-bar">
+                  <div className="top-progress-bar-fill" style={{ width: `${progress}%` }} />
+                </div>
+              </div>
+            </div>
+            <ResultsView
+              modelKey={selectedModel}
+              estimation={estimation}
+              isBlurred={isBlurred}
+              unlockOpen={unlockOpen}
+              onOpenUnlock={() => setUnlockOpen(true)}
+              onCloseUnlock={() => setUnlockOpen(false)}
+              onSubmitUnlock={handleUnlock}
+              parameters={parametersByModel[selectedModel]}
+              onEditParameters={handleEditParameters}
+            />
+          </>
         )}
       </div>
     </div>

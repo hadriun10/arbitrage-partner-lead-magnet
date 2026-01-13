@@ -15,7 +15,7 @@ function useFormState(initialValues) {
 // Configuration des champs obligatoires par section pour chaque modèle
 const REQUIRED_FIELDS_BY_MODEL = {
   recurring: [
-    ['annualRevenuePerClient', 'incrementalMargin'], // Section 1
+    ['annualRevenuePerClient'], // Section 1
     [], // Section 2 (pas de champs obligatoires)
     ['arrMultiple'] // Section 3
   ],
@@ -44,7 +44,7 @@ const REQUIRED_FIELDS_BY_MODEL = {
 // Configuration de tous les champs (obligatoires + optionnels) par section pour chaque modèle
 const ALL_FIELDS_BY_MODEL = {
   recurring: [
-    ['annualRevenuePerClient', 'incrementalMargin', 'contractDurationYears', 'annualRetentionRate'], // Section 1
+    ['annualRevenuePerClient', 'contractDurationYears', 'annualRetentionRate'], // Section 1
     ['introsPerQuarter', 'convIntroToClient'], // Section 2
     ['arrMultiple'] // Section 3
   ],
@@ -280,20 +280,6 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
               />
               <span className="field-unit">%</span>
             </div>
-          </div>
-        </div>
-        <div className="field" style={{ marginTop: 16 }}>
-          <label className="field-label">
-            Marge sur un nouveau client (%) <span>*</span>
-          </label>
-          <div className="field-with-unit">
-            <input
-              type="number"
-              className="field-input"
-              value={values.incrementalMargin || ''}
-              onChange={onChange('incrementalMargin')}
-            />
-            <span className="field-unit">%</span>
           </div>
         </div>
       </div>

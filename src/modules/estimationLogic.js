@@ -60,7 +60,7 @@ function estimateRecurring(params) {
 
   const additionalClientsPerYear = computeAdditionalUnits(params.introsPerQuarter, params.convIntroToClient);
 
-  const incrementalAnnualRevenue = annualRevenuePerClient * incrementalMargin * additionalClientsPerYear;
+  const incrementalAnnualRevenue = annualRevenuePerClient * additionalClientsPerYear;
   const arrMultiple = toNumber(params.arrMultiple, 6);
   const incrementalArr = annualRevenuePerClient * additionalClientsPerYear;
   const valuationGain = incrementalArr * arrMultiple;

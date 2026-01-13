@@ -12,7 +12,7 @@ export function Landing({ onStart }) {
         </div>
         
         <h1 className="landing-title">
-          Estimez le <em>gain économique</em> d'une
+          Estimez le gain économique d'une
           <br />
           collaboration avec Arbitrage Partners
         </h1>
@@ -61,15 +61,9 @@ export function Landing({ onStart }) {
         </div>
 
         <div className="landing-legal-card">
-          <div className="landing-legal-icon-wrapper">
-            <div className="landing-legal-icon">
-              <div className="landing-legal-icon-text">Basé sur des données réelles</div>
-            </div>
-          </div>
-          <div className="landing-legal-content">
-            <div className="landing-legal-text">
-              L'estimation repose sur vos données, sur des hypothèses conservatrices et sur des multiples sectoriels observés. Elle est indicative, non contractuelle, et conforme aux pratiques professionnelles.
-            </div>
+          <div className="landing-legal-title">BASÉ SUR DES DONNÉES RÉELLES</div>
+          <div className="landing-legal-text">
+            L'estimation repose sur vos données, sur des hypothèses conservatrices et sur des multiples sectoriels observés. Elle est indicative, non contractuelle, et conforme aux pratiques professionnelles.
           </div>
         </div>
       </div>
