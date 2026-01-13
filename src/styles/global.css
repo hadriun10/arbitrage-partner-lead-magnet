@@ -1970,15 +1970,13 @@ button {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: #fff;
+  background: transparent;
   border-radius: 8px;
 }
 
 .results-client-logo img {
   max-width: 100%;
   height: auto;
-  filter: grayscale(100%);
-  opacity: 0.7;
 }
 
 /* Criteria Section */

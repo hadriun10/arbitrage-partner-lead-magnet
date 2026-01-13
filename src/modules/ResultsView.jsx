@@ -592,7 +592,7 @@ export function ResultsView({
                 <label className="results-contact-label">Rôle</label>
                 <input type="text" className="results-contact-input" />
               </div>
-              <button type="button" className="results-contact-button" onClick={onOpenUnlock}>
+              <button type="button" className="results-contact-button">
                 ✾ Entrer en relation
               </button>
             </div>
