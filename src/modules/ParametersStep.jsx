@@ -239,7 +239,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
       {visibleSections[0] && (
       <div className="section">
         <h2 className="section-title">1. Valeur économique d’un client</h2>
-        <div className="field">
+        <div className="field" style={{ maxWidth: '365px' }}>
           <label className="field-label">
             Chiffre d'affaires annuel moyen par client - ARR (€) <span>*</span>
           </label>
@@ -289,7 +289,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
       <div className="section">
         <h2 className="section-title">2. Potentiel de croissance</h2>
         <div className="field-grid" style={{ gridTemplateColumns: '1fr' }}>
-          <div className="field">
+          <div className="field" style={{ maxWidth: '400px' }}>
             <label className="field-label">
               Combien d'introductions qualifiées votre meilleur collaborateur vous amène-t-il chaque trimestre en moyenne (#)
             </label>
@@ -307,7 +307,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
               (Nous viserons au minimum 1,5× ce niveau.)
             </div>
           </div>
-          <div className="field">
+          <div className="field" style={{ maxWidth: '400px' }}>
             <label className="field-label">
               Taux de transformation : introduction qualifiée → client (%)
             </label>

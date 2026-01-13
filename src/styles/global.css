@@ -124,7 +124,7 @@ button {
 }
 
 .card {
-  background: #05150A;
+  background: #021408;
   border-radius: 0;
   box-shadow: none;
   padding: 20px 56px 48px;
@@ -190,11 +190,11 @@ button {
 
 .landing-title {
   font-family: 'Libre Caslon Text', 'Times New Roman', serif;
-  font-size: 64px;
+  font-size: 48px;
   font-weight: normal;
   line-height: 1.1;
   text-align: center;
-  margin: 48px 0 12px;
+  margin: 48px 0 32px;
   letter-spacing: 0.01em;
   color: #ffffff;
 }
@@ -207,7 +207,7 @@ button {
   font-size: 16px;
   color: #ffffff;
   text-align: center;
-  margin: 0 0 24px;
+  margin: 0 0 16px;
   opacity: 0.9;
 }
 
@@ -220,14 +220,14 @@ button {
   background: #235523;
   border: none;
   border-radius: 10px;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
   max-width: 400px;
   margin: 0 auto;
 }
 
 .landing-container .primary-button:hover {
   background: #2a662a;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Modal overlay and animation */
@@ -255,7 +255,7 @@ button {
 .modal-content {
   width: 100%;
   max-width: 100%;
-  background: #05150A;
+  background: #021408;
   border-radius: 24px 24px 0 0;
   padding: 32px 40px 56px;
   max-height: 92vh;
@@ -355,6 +355,15 @@ button {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  max-width: 400px;
+}
+
+.field-grid {
+  max-width: none;
+}
+
+.field-grid .field {
+  max-width: none;
 }
 
 .field-with-unit {
@@ -362,7 +371,7 @@ button {
   align-items: center;
   border-radius: 10px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   background-color: #faf7f2;
   padding: 0 12px;
 }
@@ -389,7 +398,7 @@ button {
 }
 
 .field-with-unit:focus-within {
-  box-shadow: inset 0 0 0 0.3px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
+  box-shadow: inset 0 0 0 0.4px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
   background-color: #D0D8D0;
 }
 
@@ -397,7 +406,7 @@ button {
   background-color: #D0D8D0;
   border-radius: 10px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
 }
 
 .card .field-label {
@@ -413,7 +422,7 @@ button {
 .field-input {
   border-radius: 0;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   padding: 12px 14px;
   font-size: 15px;
   background-color: #faf7f2;
@@ -427,11 +436,11 @@ button {
   background-color: #D0D8D0;
   border-radius: 10px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
 }
 
 .field-input:focus {
-  box-shadow: inset 0 0 0 0.3px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
+  box-shadow: inset 0 0 0 0.4px var(--color-green-dark), 0 0 0 1px var(--color-green-dark15, rgba(16, 49, 38, 0.16));
   background-color: #fff;
 }
 
@@ -468,7 +477,7 @@ button {
   color: #ffffff;
   border: none;
   border-radius: 10px;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .primary-button:hover {
@@ -479,7 +488,7 @@ button {
 
 .card .primary-button:hover {
   background-color: #2a662a;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 4px 20px rgba(255, 255, 255, 0.3);
 }
 
 .primary-button:active {
@@ -522,7 +531,7 @@ button {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
-  margin-top: 48px;
+  margin-top: 24px;
   margin-bottom: 32px;
   padding: 0 20px;
 }
@@ -571,14 +580,14 @@ button {
 .landing-legal-card {
   max-width: 900px;
   margin: 48px auto 0;
-  background: #05150a;
+  background: #021408;
   border: none;
   border-radius: 12px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
 }
 
 .landing-legal-title {
@@ -610,7 +619,7 @@ button {
 .model-buttons-row {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 14px 14px;
+  gap: 24px 24px;
   row-gap: 48px;
   margin-top: 40px;
   margin-bottom: 24px;
@@ -639,7 +648,7 @@ button {
 .model-button {
   border-radius: 12px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 2px 10px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 2px 10px rgba(255, 255, 255, 0.15);
   padding: 0;
   background: rgba(255, 255, 255, 0.05);
   cursor: pointer;
@@ -671,9 +680,9 @@ button {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: #05150A;
+  background: #021408;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
 }
 
 .model-button-icon svg {
@@ -728,7 +737,7 @@ button {
 }
 
 .model-button.selected {
-  box-shadow: inset 0 0 0 0.3px #05aa33, 0 2px 10px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 0.4px #05aa33, 0 2px 10px rgba(255, 255, 255, 0.15);
   background-color: rgba(5, 170, 51, 0.15);
   transform: translateY(-2px);
 }
@@ -739,13 +748,13 @@ button {
 }
 
 .model-button:hover {
-  box-shadow: inset 0 0 0 0.3px rgba(255, 255, 255, 0.4), 0 2px 10px rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 0 0 0.4px rgba(255, 255, 255, 0.4), 0 2px 10px rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.08);
   transform: translateY(-1px);
 }
 
 .section {
-  margin-top: 48px;
+  margin-top: 32px;
   padding-top: 32px;
   border-top: 1px solid rgba(216, 209, 201, 0.7);
 }
@@ -755,7 +764,7 @@ button {
   font-family: 'Libre Caslon Text', serif;
   font-size: 22px;
   font-weight: normal;
-  margin: 0 0 12px;
+  margin: 0 0 24px;
   color: #ffffff;
 }
 
@@ -769,7 +778,7 @@ button {
 .results-card {
   border-radius: 0;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   padding: 18px 18px 20px;
   background: #faf7f2;
 }
@@ -830,7 +839,7 @@ button {
 
 .results-hero-card {
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   background: #faf7f2;
   padding: 22px 26px 20px;
   margin-top: 8px;
@@ -838,7 +847,7 @@ button {
 
 .card .results-hero-card {
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
   background: rgba(255, 255, 255, 0.05);
   padding: 32px 26px;
   border-radius: 12px;
@@ -1050,14 +1059,14 @@ button {
 .results-tag {
   font-size: 11px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   padding: 6px 10px;
   background: #fff;
 }
 
 .card .results-tag {
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
   background: rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.8);
 }
@@ -1068,7 +1077,7 @@ button {
 
 .card .results-methodology-card {
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF, 0 2px 20px rgba(5, 170, 51, 0.12);
+  box-shadow: inset 0 0 0 0.4px #F5F3EF, 0 2px 20px rgba(5, 170, 51, 0.12);
   background: rgba(255, 255, 255, 0.05);
   padding: 20px 26px;
   position: relative;
@@ -1116,7 +1125,7 @@ button {
 
 .card .results-methodology-row + .results-methodology-row {
   border-top: none;
-  box-shadow: inset 0 0.3px 0 0 #F5F3EF;
+  box-shadow: inset 0 0.4px 0 0 #F5F3EF;
 }
 
 .card .results-methodology-action {
@@ -1127,7 +1136,7 @@ button {
 
 .card .results-download-button {
   border: none;
-  box-shadow: inset 0 0 0 0.3px #F5F3EF;
+  box-shadow: inset 0 0 0 0.4px #F5F3EF;
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   padding: 8px 16px;
@@ -1163,7 +1172,7 @@ button {
   color: rgba(255, 255, 255, 0.6);
   padding-top: 12px;
   border-top: none;
-  box-shadow: inset 0 0.3px 0 0 #F5F3EF;
+  box-shadow: inset 0 0.4px 0 0 #F5F3EF;
 }
 
 .card .results-levers {
@@ -1379,7 +1388,7 @@ button {
    ============================================ */
 
 .results-page {
-  background: #05150a;
+  background: #021408;
   color: #f5f3ef;
   min-height: 100vh;
   width: 100%;
@@ -1459,7 +1468,7 @@ button {
 }
 
 .results-your-figures-card {
-  background: #05150a;
+  background: #021408;
   border: none;
   box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
   border-radius: 20px;
@@ -1529,7 +1538,7 @@ button {
 }
 
 .results-collaboration-card {
-  background: #05150a;
+  background: #021408;
   border: none;
   box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
   border-radius: 20px;
@@ -1616,7 +1625,7 @@ button {
 }
 
 .results-economic-value-card {
-  background: #05150a;
+  background: #021408;
   border: none;
   box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.1);
   border-radius: 20px;
@@ -1750,10 +1759,10 @@ button {
 /* Who Section */
 .results-who-section {
   background: #f5f3ef;
-  color: #05150a;
+  color: #021408;
   padding: 80px 0;
   margin-top: 0;
-  padding-top: calc(80px + 20vw);
+  padding-top: calc(120px + 8vw);
   position: relative;
   z-index: 1;
   width: 100%;
@@ -1776,25 +1785,35 @@ button {
 .results-who-content {
   background: #f5f3ef;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150a, 0px 4px 20px rgba(5, 21, 10, 0.1);
+  box-shadow: inset 0 0 0 0.3px #021408, 0px 4px 20px rgba(5, 21, 10, 0.1);
   border-radius: 20px;
   padding: 24px;
 }
 
 .results-who-title {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #021408;
+  margin: 0 0 24px;
+}
+
+.results-who-text-large {
   font-family: 'Libre Caslon Text', serif;
-  font-size: 38px;
+  font-size: 26px;
   font-weight: 400;
   line-height: 1.2;
-  color: #05150a;
-  margin: 0 0 24px;
+  color: #021408;
+  margin: 0 0 16px;
 }
 
 .results-who-text {
   font-family: 'BDO Grotesk', sans-serif;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.3;
-  color: #05150a;
+  color: #021408;
   margin: 0 0 16px;
 }
 
@@ -1815,20 +1834,20 @@ button {
   font-family: 'Libre Caslon Text', serif;
   font-size: 30px;
   line-height: 1.2;
-  color: #05150a;
+  color: #021408;
 }
 
 .results-stat-label {
   font-family: 'BDO Grotesk', sans-serif;
   font-size: 14px;
   line-height: 1.3;
-  color: #05150a;
+  color: #021408;
 }
 
 /* Challenges Section */
 .results-challenges-section {
   background: #f5f3ef;
-  color: #05150a;
+  color: #021408;
   padding: 80px 0;
   width: 100%;
 }
@@ -1848,20 +1867,20 @@ button {
 }
 
 .results-challenges-title {
-  font-family: 'Libre Caslon Text', serif;
-  font-size: 38px;
-  font-weight: 400;
-  line-height: 1.2;
-  color: #05150a;
-  margin: 0 0 8px;
-}
-
-.results-challenges-subtitle {
   font-family: 'BDO Grotesk', sans-serif;
   font-size: 14px;
   font-weight: 300;
   text-transform: uppercase;
-  color: #05150a;
+  line-height: 1.2;
+  color: #021408;
+  margin: 0 0 8px;
+}
+
+.results-challenges-subtitle {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 38px;
+  font-weight: 400;
+  color: #021408;
   margin: 0;
 }
 
@@ -1880,7 +1899,7 @@ button {
 .results-challenge-card {
   background: #f5f3ef;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150a, 0px 4px 20px rgba(5, 21, 10, 0.1);
+  box-shadow: inset 0 0 0 0.3px #021408, 0px 4px 20px rgba(5, 21, 10, 0.1);
   border-radius: 20px;
   padding: 0;
   display: flex;
@@ -1918,7 +1937,7 @@ button {
   font-size: 15px;
   font-weight: 700;
   line-height: 1.2;
-  color: #05150a;
+  color: #021408;
   margin: 0;
 }
 
@@ -1926,14 +1945,14 @@ button {
   font-family: 'BDO Grotesk', sans-serif;
   font-size: 12px;
   line-height: 1.2;
-  color: #05150a;
+  color: #021408;
   margin: 0;
 }
 
 /* Clients Section */
 .results-clients-section {
   background: #f5f3ef;
-  color: #05150a;
+  color: #021408;
   padding: 80px 0;
   width: 100%;
 }
@@ -1954,7 +1973,7 @@ button {
   font-weight: 300;
   text-transform: uppercase;
   text-align: center;
-  color: #05150a;
+  color: #021408;
   margin: 0 0 40px;
 }
 
@@ -1981,7 +2000,7 @@ button {
 
 /* Criteria Section */
 .results-criteria-section {
-  background: #05150a;
+  background: #021408;
   color: #f5f3ef;
   padding: 80px 0;
   display: grid;
@@ -2057,7 +2076,7 @@ button {
 }
 
 .results-criteria-note {
-  background: #05150a;
+  background: #021408;
   border: none;
   border-radius: 10px;
   padding: 12px;
@@ -2073,7 +2092,7 @@ button {
 }
 
 .results-contact-form-wrapper {
-  background: #05150a;
+  background: #021408;
   border: none;
   box-shadow: inset 0 0 0 0.3px #f5f3ef, 0px 4px 20px rgba(245, 243, 239, 0.2);
   border-radius: 20px;
@@ -2125,7 +2144,7 @@ button {
   font-family: 'BDO Grotesk', sans-serif;
   font-size: 16px;
   font-weight: 600;
-  color: #05150a;
+  color: #021408;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -2136,7 +2155,7 @@ button {
 
 /* Sectors Section */
 .results-sectors-section {
-  background: #05150a;
+  background: #021408;
   color: #f5f3ef;
   padding: 80px 0;
   width: 100%;
@@ -2335,7 +2354,7 @@ button {
 .contact-field-input {
   padding: 10px 16px;
   border: none;
-  box-shadow: inset 0 0 0 0.3px #05150A;
+  box-shadow: inset 0 0 0 0.4px #021408;
   border-radius: 8px;
   font-family: 'BDO Grotesk', sans-serif;
   font-size: 14px;
