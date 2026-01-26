@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 export function ContactModal({ onClose, onSubmit }) {
-  console.log('ContactModal rendered');
   const [form, setForm] = useState({
     fullName: '',
     email: '',

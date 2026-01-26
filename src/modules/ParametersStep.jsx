@@ -15,7 +15,7 @@ function useFormState(initialValues) {
 // Configuration des champs obligatoires par section pour chaque modèle
 const REQUIRED_FIELDS_BY_MODEL = {
   recurring: [
-    ['annualRevenuePerClient'], // Section 1
+    ['annualRevenuePerClient', 'incrementalMargin'], // Section 1
     [], // Section 2 (pas de champs obligatoires)
     ['arrMultiple'] // Section 3
   ],
@@ -25,17 +25,15 @@ const REQUIRED_FIELDS_BY_MODEL = {
     ['ebitdaMultiple'] // Section 3
   ],
   transactions: [
-    ['avgTransactionValue', 'successFee'], // Section 1
-    [], // Section 2
-    ['ebitdaMultiple'] // Section 3
+    ['avgTransactionValue', 'successFee', 'netMargin'], // Section 1: Valeur d'une transaction
+    ['introsPerQuarter', 'convIntroToMandate'] // Section 2: Pipeline
   ],
   financing: [
-    ['avgFinancedAmount', 'annualSpread'], // Section 1
-    [], // Section 2
-    ['ebitdaMultiple'] // Section 3
+    ['avgFinancedAmount', 'annualSpread', 'financingDurationYears', 'netMargin'], // Section 1: Valeur d'une opération
+    ['introsPerQuarter', 'convIntroToFinancing'] // Section 2: Pipeline
   ],
   asset_management: [
-    ['initialAum', 'mgmtFeeAnnual'], // Section 1
+    ['initialAum', 'mgmtFeeAnnual', 'relationshipDurationYears', 'netMargin'], // Section 1
     [], // Section 2
     ['mgmtFeesMultiple'] // Section 3
   ]
@@ -44,7 +42,7 @@ const REQUIRED_FIELDS_BY_MODEL = {
 // Configuration de tous les champs (obligatoires + optionnels) par section pour chaque modèle
 const ALL_FIELDS_BY_MODEL = {
   recurring: [
-    ['annualRevenuePerClient', 'contractDurationYears', 'annualRetentionRate'], // Section 1
+    ['annualRevenuePerClient', 'incrementalMargin', 'contractDurationYears', 'annualRetentionRate'], // Section 1
     ['introsPerQuarter', 'convIntroToClient'], // Section 2
     ['arrMultiple'] // Section 3
   ],
@@ -54,17 +52,15 @@ const ALL_FIELDS_BY_MODEL = {
     ['ebitdaMultiple'] // Section 3
   ],
   transactions: [
-    ['avgTransactionValue', 'successFee', 'workFees'], // Section 1
-    ['introsPerQuarter', 'convIntroToMandate'], // Section 2
-    ['ebitdaMultiple'] // Section 3
+    ['avgTransactionValue', 'successFee', 'workFees', 'netMargin'], // Section 1: Valeur d'une transaction
+    ['introsPerQuarter', 'convIntroToMandate'] // Section 2: Pipeline
   ],
   financing: [
-    ['avgFinancedAmount', 'annualSpread', 'netMargin'], // Section 1
-    ['introsPerQuarter', 'convIntroToFinancing'], // Section 2
-    ['ebitdaMultiple'] // Section 3
+    ['avgFinancedAmount', 'annualSpread', 'financingDurationYears', 'fixedFees', 'netMargin'], // Section 1: Valeur d'une opération
+    ['introsPerQuarter', 'convIntroToFinancing'] // Section 2: Pipeline
   ],
   asset_management: [
-    ['initialAum', 'mgmtFeeAnnual', 'performanceFee'], // Section 1
+    ['initialAum', 'mgmtFeeAnnual', 'perfFee', 'additionalCommissions', 'relationshipDurationYears', 'netMargin'], // Section 1
     ['introsPerQuarter', 'convIntroToRelationship'], // Section 2
     ['mgmtFeesMultiple'] // Section 3
   ]
@@ -238,7 +234,7 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
     <>
       {visibleSections[0] && (
       <div className="section">
-        <h2 className="section-title">1. Valeur économique d’un client</h2>
+        <h2 className="section-title">1. Valeur économique d'un client</h2>
         <div className="field" style={{ maxWidth: '365px' }}>
           <label className="field-label">
             Chiffre d'affaires annuel moyen par client - ARR (€) <span>*</span>
@@ -280,6 +276,20 @@ function RecurringSections({ values, onChange, visibleSections = [true, true, tr
               />
               <span className="field-unit">%</span>
             </div>
+          </div>
+        </div>
+        <div className="field" style={{ marginTop: 20, maxWidth: '365px' }}>
+          <label className="field-label">
+            Marge nette par client (%) <span>*</span>
+          </label>
+          <div className="field-with-unit">
+            <input
+              type="number"
+              className="field-input"
+              value={values.incrementalMargin || ''}
+              onChange={onChange('incrementalMargin')}
+            />
+            <span className="field-unit">%</span>
           </div>
         </div>
       </div>
@@ -391,10 +401,10 @@ function ProjectsSections({ values, onChange, visibleSections = [true, true, tru
 
       {visibleSections[1] && (
       <div className="section">
-        <h2 className="section-title">2. Capacité commerciale</h2>
+        <h2 className="section-title">2. Pipeline trimestriel</h2>
         <div className="field-grid">
           <div className="field">
-            <label className="field-label">Opportunités qualifiées par mois (meilleur collaborateur)</label>
+            <label className="field-label">Opportunités qualifiées (meilleur collaborateur)</label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -402,7 +412,7 @@ function ProjectsSections({ values, onChange, visibleSections = [true, true, tru
                 value={values.qualifiedOppPerQuarter || ''}
                 onChange={onChange('qualifiedOppPerQuarter')}
               />
-              <span className="field-unit">/ mois</span>
+              <span className="field-unit">/ trimestre</span>
             </div>
           </div>
           <div className="field">
@@ -448,16 +458,16 @@ function ProjectsSections({ values, onChange, visibleSections = [true, true, tru
   );
 }
 
-function TransactionsSections({ values, onChange, visibleSections = [true, true, true] }) {
+function TransactionsSections({ values, onChange, visibleSections = [true, true] }) {
   return (
     <>
       {visibleSections[0] && (
       <div className="section">
-        <h2 className="section-title">1. Valeur d'un mandat</h2>
+        <h2 className="section-title">1. Valeur d'une transaction</h2>
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Valorisation moyenne des transactions (€) <span>*</span>
+              Valeur moyenne de l'asset à vendre (€) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -471,7 +481,7 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
           </div>
           <div className="field">
             <label className="field-label">
-              Success fee moyen (%) <span>*</span>
+              Success fees moyens (%) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -484,7 +494,7 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
             </div>
           </div>
           <div className="field">
-            <label className="field-label">Work fees / retainers (€)</label>
+            <label className="field-label">Retainer fees (si applicables) (€)</label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -493,34 +503,6 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
                 onChange={onChange('workFees')}
               />
               <span className="field-unit">€</span>
-            </div>
-          </div>
-          <div className="field">
-            <label className="field-label">
-              Probabilité de closing (%) <span>*</span>
-            </label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.closingProbability || ''}
-                onChange={onChange('closingProbability')}
-              />
-              <span className="field-unit">%</span>
-            </div>
-          </div>
-          <div className="field">
-            <label className="field-label">
-              Durée moyenne d’un mandat (mois) <span>*</span>
-            </label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.mandateDurationMonths || ''}
-                onChange={onChange('mandateDurationMonths')}
-              />
-              <span className="field-unit">mois</span>
             </div>
           </div>
           <div className="field">
@@ -543,10 +525,12 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
 
       {visibleSections[1] && (
       <div className="section">
-        <h2 className="section-title">2. Pipeline</h2>
+        <h2 className="section-title">2. Pipeline trimestriel</h2>
         <div className="field-grid">
           <div className="field">
-            <label className="field-label">Introductions qualifiées par mois</label>
+            <label className="field-label">
+              # opportunités qualifiées par meilleur collaborateur <span>*</span>
+            </label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -554,12 +538,12 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
                 value={values.introsPerQuarter || ''}
                 onChange={onChange('introsPerQuarter')}
               />
-              <span className="field-unit">/ mois</span>
+              <span className="field-unit">/ trimestre</span>
             </div>
           </div>
           <div className="field">
             <label className="field-label">
-              Taux de transformation : introduction → mandat (%)
+              % taux de closing <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -574,33 +558,11 @@ function TransactionsSections({ values, onChange, visibleSections = [true, true,
         </div>
       </div>
       )}
-
-      {visibleSections[2] && (
-      <div className="section">
-        <h2 className="section-title">3. Valorisation</h2>
-        <div className="field-grid">
-          <div className="field">
-            <label className="field-label">
-              Multiple d'EBITDA (small / mid-cap) <span>*</span>
-            </label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.ebitdaMultiple || ''}
-                onChange={onChange('ebitdaMultiple')}
-              />
-              <span className="field-unit">x</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      )}
     </>
   );
 }
 
-function FinancingSections({ values, onChange, visibleSections = [true, true, true] }) {
+function FinancingSections({ values, onChange, visibleSections = [true, true] }) {
   return (
     <>
       {visibleSections[0] && (
@@ -609,7 +571,7 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
         <div className="field-grid">
           <div className="field">
             <label className="field-label">
-              Montant moyen financé (€) <span>*</span>
+              Montant moyen d'un financement (€) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -637,7 +599,7 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
           </div>
           <div className="field">
             <label className="field-label">
-              Durée du financement (années) <span>*</span>
+              Durée moyenne de financement (années) <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -650,37 +612,13 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
             </div>
           </div>
           <div className="field">
-            <label className="field-label">Frais d’arrangement (€)</label>
+            <label className="field-label">Frais fixes cumulés (€)</label>
             <div className="field-with-unit">
               <input
                 type="number"
                 className="field-input"
-                value={values.arrangementFees || ''}
-                onChange={onChange('arrangementFees')}
-              />
-              <span className="field-unit">€</span>
-            </div>
-          </div>
-          <div className="field">
-            <label className="field-label">Frais de structuration (€)</label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.structuringFees || ''}
-                onChange={onChange('structuringFees')}
-              />
-              <span className="field-unit">€</span>
-            </div>
-          </div>
-          <div className="field">
-            <label className="field-label">Frais de servicing annuels (€)</label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.servicingFeesAnnual || ''}
-                onChange={onChange('servicingFeesAnnual')}
+                value={values.fixedFees || ''}
+                onChange={onChange('fixedFees')}
               />
               <span className="field-unit">€</span>
             </div>
@@ -705,10 +643,12 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
 
       {visibleSections[1] && (
       <div className="section">
-        <h2 className="section-title">2. Pipeline</h2>
+        <h2 className="section-title">2. Pipeline trimestriel</h2>
         <div className="field-grid">
           <div className="field">
-            <label className="field-label">Introductions qualifiées par mois</label>
+            <label className="field-label">
+              # opportunités qualifiées par collaborateur <span>*</span>
+            </label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -716,12 +656,12 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
                 value={values.introsPerQuarter || ''}
                 onChange={onChange('introsPerQuarter')}
               />
-              <span className="field-unit">/ mois</span>
+              <span className="field-unit">/ trimestre</span>
             </div>
           </div>
           <div className="field">
             <label className="field-label">
-              Taux de transformation : introduction → financement (%)
+              % taux de closing <span>*</span>
             </label>
             <div className="field-with-unit">
               <input
@@ -731,28 +671,6 @@ function FinancingSections({ values, onChange, visibleSections = [true, true, tr
                 onChange={onChange('convIntroToFinancing')}
               />
               <span className="field-unit">%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      )}
-
-      {visibleSections[2] && (
-      <div className="section">
-        <h2 className="section-title">3. Valorisation</h2>
-        <div className="field-grid">
-          <div className="field">
-            <label className="field-label">
-              Multiple d'EBITDA institutionnel <span>*</span>
-            </label>
-            <div className="field-with-unit">
-              <input
-                type="number"
-                className="field-input"
-                value={values.ebitdaMultiple || ''}
-                onChange={onChange('ebitdaMultiple')}
-              />
-              <span className="field-unit">x</span>
             </div>
           </div>
         </div>
@@ -855,10 +773,10 @@ function AssetManagementSections({ values, onChange, visibleSections = [true, tr
 
       {visibleSections[1] && (
       <div className="section">
-        <h2 className="section-title">2. Pipeline</h2>
+        <h2 className="section-title">2. Pipeline trimestriel</h2>
         <div className="field-grid">
           <div className="field">
-            <label className="field-label">Introductions qualifiées par mois</label>
+            <label className="field-label">Introductions qualifiées</label>
             <div className="field-with-unit">
               <input
                 type="number"
@@ -866,7 +784,7 @@ function AssetManagementSections({ values, onChange, visibleSections = [true, tr
                 value={values.introsPerQuarter || ''}
                 onChange={onChange('introsPerQuarter')}
               />
-              <span className="field-unit">/ mois</span>
+              <span className="field-unit">/ trimestre</span>
             </div>
           </div>
           <div className="field">

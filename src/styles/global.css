@@ -28,14 +28,6 @@
 
 @font-face {
   font-family: 'Libre Caslon Text';
-  src: url('../../Libre_Caslon_Text/LibreCaslonText-Regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Libre Caslon Text';
   src: url('../../Libre_Caslon_Text/LibreCaslonText-Bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700;
@@ -1445,6 +1437,42 @@ button {
   font-weight: 700;
 }
 
+.results-text-blue-italic {
+  color: #6dc0ff;
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Main section titles (Vos chiffres, Projection indicative) */
+.results-main-section-title {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 40px 0 24px;
+  max-width: 1512px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 305px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1200px) {
+  .results-main-section-title {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .results-main-section-title {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 24px;
+  }
+}
+
 /* Section Titles */
 .results-section-title-small {
   font-family: 'BDO Grotesk', sans-serif;
@@ -1459,7 +1487,7 @@ button {
 /* Vos Chiffres Section */
 .results-your-figures-section {
   padding: 0 305px;
-  margin: 40px 0;
+  margin: 0 0 24px;
   max-width: 1512px;
   margin-left: auto;
   margin-right: auto;
@@ -1487,6 +1515,26 @@ button {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.results-figures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.results-figure-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-figure-explanation {
+  font-family: 'BDO Grotesk', sans-serif;
+  font-size: 12px;
+  line-height: 1.15;
+  color: #f5f3ef;
 }
 
 .results-figure-amount-row {
@@ -1529,7 +1577,7 @@ button {
 /* Collaboration Section */
 .results-collaboration-section {
   padding: 0 305px;
-  margin: 40px 0;
+  margin: 0 0 24px;
   max-width: 1512px;
   margin-left: auto;
   margin-right: auto;
@@ -1614,7 +1662,7 @@ button {
 /* Economic Value Section */
 .results-economic-value-section {
   padding: 0 305px;
-  margin: 40px 0;
+  margin: 0 0 40px;
   max-width: 1512px;
   margin-left: auto;
   margin-right: auto;
@@ -1637,6 +1685,21 @@ button {
   flex-direction: column;
   gap: 24px;
   margin-top: 16px;
+}
+
+/* Grid layout for 3+ value indicators */
+.results-economic-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.results-economic-cards-grid .results-economic-card {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: none;
+  box-shadow: inset 0 0 0 0.3px rgba(245, 243, 239, 0.3);
 }
 
 .results-economic-card {
@@ -2456,6 +2519,10 @@ button {
   }
 
   .results-footer-content {
+    grid-template-columns: 1fr;
+  }
+
+  .results-economic-cards-grid {
     grid-template-columns: 1fr;
   }
 }
